@@ -39,13 +39,12 @@ app.get('/', routes.index);
 
 app.listen(3000);
 console.log('Listening %d in %s mode', app.address().port, app.settings.env);
-
 tank.initPins = function(){
   async.parallel([
     gpio.setup(p7,gpio.DIR_OUT),
-    gpio.setup(p11,gpio.DIR_OUT),
-    gpio.setup(p13,gpio.DIR_OUT),
-    gpio.setup(p15,gpio.DIR_OUT)
+    gpio.open(p11,gpio.DIR_OUT),
+    gpio.open(p13,gpio.DIR_OUT),
+    gpio.open(p15,gpio.DIR_OUT)
   ]);
 };
 
