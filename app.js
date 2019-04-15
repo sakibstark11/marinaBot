@@ -51,6 +51,7 @@ tank.initPins = function(){
 
 tank.moveForward = function(){
   async.parallel([
+    console.log("forward"),
     gpio.write(p11, 1),
     gpio.write(p13, 1)
   ]);
