@@ -38,13 +38,13 @@ app.configure('production', function() {
 app.get('/', routes.index);
 
 app.listen(3000);
-console.log('Listening %d in %s mode', app.address().port, app.settings.env);
+//console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function(){
   async.parallel([
     gpio.setup(p7,gpio.DIR_OUT),
-    gpio.open(p11,gpio.DIR_OUT),
-    gpio.open(p13,gpio.DIR_OUT),
-    gpio.open(p15,gpio.DIR_OUT)
+    gpio.setup(p11,gpio.DIR_OUT),
+    gpio.setup(p13,gpio.DIR_OUT),
+    gpio.setup(p15,gpio.DIR_OUT)
   ]);
 };
 
@@ -89,12 +89,15 @@ io.sockets.on('connection', function(socket) {
         break;
       case 'down':
         tank.moveBackward();
+        console.log("reverse");
         break;
       case 'left':
         tank.turnLeft();
+        console.log("left");
         break;
       case 'right':
         tank.turnRight();
+        console.log("right")
         break;
     }
   });
