@@ -51,7 +51,6 @@ tank.initPins = function(){
 
 tank.moveForward = function(){
   async.parallel([
-    console.log("forward"),
     gpio.write(p11, 1),
     gpio.write(p13, 1)
   ]);
@@ -86,6 +85,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('keydown', function(dir) {
     switch(dir){
      case 'up':
+        console.log("forward");
         tank.moveForward();
         break;
       case 'down':
