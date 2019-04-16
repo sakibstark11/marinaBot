@@ -165,13 +165,15 @@ io.sockets.on('connection', function(socket) {
     switch(dir){
       case 'goup':
       time2 - new Date();
-      totaltime-=(time2-time);
+      totaltime = totaltime-(time2-time);
       console.log(totaltime);
+      tank.stopAllMotors();
       break;
       case 'godown':
       time2 = new Date();
-      totaltime += time2-time;
+      totaltime = totaltime+ (time2-time);
       console.log(totaltime);
+      tank.stopAllMotors();
       break;
       default:
       tank.stopAllMotors();
