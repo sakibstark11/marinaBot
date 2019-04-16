@@ -164,7 +164,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('keyup', function(dir){
     switch(dir){
       case 'goup':
-      time2 - new Date();
+      time2 = new Date();
       totaltime = totaltime-(time2-time);
       console.log(totaltime);
       tank.stopAllMotors();
