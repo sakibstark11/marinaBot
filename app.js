@@ -122,10 +122,6 @@ tank.stopAllMotors = function(){
 io.sockets.on('connection', function(socket) {
   socket.on("disconnect", function(){
     console.log("Connection lost");
-    for (var temp = new Date().getTime();)
-
-
-});
   socket.on('keydown', function(dir) {
     switch(dir){
      case 'up':
