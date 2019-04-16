@@ -59,7 +59,6 @@ tank.moveForward = function(){
 };
 tank.goup = function(){
   async.parallel([
-    vertical--,
     gpio.write(p7,0),
     gpio.write(p11, 0),
     gpio.write(p13,1),
@@ -68,7 +67,6 @@ tank.goup = function(){
 };
 tank.godown = function(){
   async.parallel([
-    vertical++,
     gpio.write(p13,0),
     gpio.write(p15,0),
     gpio.write(p7,1),
@@ -107,8 +105,8 @@ tank.stopAllMotors = function(){
     gpio.write(p7, 1)
   ]);
 };
-var vertical = 0;
 io.sockets.on('connection', function(socket) {
+  var vertical = 0;
   socket.on("disconnect", function(){
     console.log("Connection lost");
     if (vertical>0){
@@ -117,7 +115,6 @@ io.sockets.on('connection', function(socket) {
       }
     }
 
-    
 });
   socket.on('keydown', function(dir) {
     switch(dir){
@@ -139,11 +136,13 @@ io.sockets.on('connection', function(socket) {
         break;
       case 'goup':
         tank.goup();
+        vertical--;
         console.log("up");
 
         break;
       case 'godown':
         tank.godown();
+        vertical++;
         console.log("down");
         break;              
     }
