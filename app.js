@@ -61,7 +61,6 @@ tank.moveForward = function(){
 tank.goup = function(){
   
   async.parallel(
-    vertical--,
     [
     gpio.write(p7,0),
     gpio.write(p11, 0),
@@ -72,7 +71,6 @@ tank.goup = function(){
 tank.godown = function(){
   
   async.parallel(
-    vertical++,
     [
     gpio.write(p13,0),
     gpio.write(p15,0),
@@ -82,7 +80,8 @@ tank.godown = function(){
 };
 
 tank.moveBackward = function(){
-  async.parallel([
+  async.parallel(
+    [
     gpio.write(p11,0),
     gpio.write(p13,0),
     gpio.write(p15,1),
