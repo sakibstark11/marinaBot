@@ -17,7 +17,7 @@ var express = require('express'),
     vertical,
     time,
     time2,
-    totaltime,
+    totaltime = 0,
     io = sio.listen(app);
 
 // Configuration
@@ -167,14 +167,16 @@ io.sockets.on('connection', function(socket) {
     switch(dir){
       case 'goup':
       time2 = new Date().getTime();
-      var diff = time2- time;
+      var diff = time2 - time;
       console.log("diff "+ diff);
+      totaltime -= diff;
       tank.stopAllMotors();
       break;
       case 'godown':
       time2 = new Date().getTime();
-      var diff = time2- time;
+      var diff = time2 - time;
       console.log("diff "+ diff);
+      totaltime += diff;
       tank.stopAllMotors();
       break;
       default:
