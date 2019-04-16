@@ -168,15 +168,19 @@ io.sockets.on('connection', function(socket) {
       case 'goup':
       time2 = new Date().getTime();
       console.log(time2);
-      totaltime = totaltime - (time2-time);
-      console.log(totaltime);
+      var temp = time2-time;
+      var temp2 = totaltime-temp;
+      totaltime = temp2;
+      console.log(temp2);
       tank.stopAllMotors();
       break;
       case 'godown':
       time2 = new Date().getTime();
       console.log(time2);
-      totaltime = totaltime + (time2-time);
-      console.log(totaltime);
+      var temp = time2-time;
+      var temp2 = totaltime+temp;
+      totaltime = temp2;
+      console.log(temp2);
       tank.stopAllMotors();
       break;
       default:
