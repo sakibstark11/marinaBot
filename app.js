@@ -147,18 +147,16 @@ io.sockets.on('connection', function(socket) {
         console.log("right");
         break;
       case 'goup':
-        vertical--;
         time = new Date().getTime();
         console.log(time);
         tank.goup();
-        console.log("up "+vertical);
+        console.log("up");
         break;
       case 'godown':
-        vertical++;
         time = new Date().getTime();
         console.log(time);
         tank.godown();
-        console.log("down "+vertical);
+        console.log("down");
         break;              
     }
   });
@@ -170,7 +168,7 @@ io.sockets.on('connection', function(socket) {
       var diff = time2 - time;
       console.log("diff "+ diff);
       totaltime -= diff;
-      console.log(totaltime);
+      console.log("total" +totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
@@ -178,7 +176,7 @@ io.sockets.on('connection', function(socket) {
       var diff = time2 - time;
       console.log("diff "+ diff);
       totaltime += diff;
-      console.log(totaltime);
+      console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
       default:
