@@ -14,6 +14,7 @@ var express = require('express'),
     p13 = 13,
     p15  = 15,
     app = module.exports = express.createServer(),
+    vertical,
     io = sio.listen(app);
 
 // Configuration
@@ -112,7 +113,7 @@ tank.stopAllMotors = function(){
   ]);
 };
 io.sockets.on('connection', function(socket) {
-  var vertical = 0;
+   vertical= 0;
   socket.on("disconnect", function(){
     console.log("Connection lost");
     if (vertical>0){
