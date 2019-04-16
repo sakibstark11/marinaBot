@@ -126,7 +126,7 @@ io.sockets.on('connection', function(socket) {
     tank.goup();
     while(new Date().getTime()-counttime < totaltime){
     }
-    tank.stopAllMotors();
+    
     
     console.log("done");
 
