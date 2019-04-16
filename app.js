@@ -168,7 +168,7 @@ io.sockets.on('connection', function(socket) {
       var diff = time2 - time;
       console.log("diff "+ diff);
       totaltime -= diff;
-      console.log("total" +totaltime);
+      console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
