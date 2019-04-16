@@ -146,11 +146,13 @@ io.sockets.on('connection', function(socket) {
         console.log("right");
         break;
       case 'goup':
+        vertical--;
         time = new Date();
         tank.goup();
         console.log("up "+vertical);
         break;
       case 'godown':
+        vertical++;
         time = new Date();
         tank.godown();
         console.log("down "+vertical);
