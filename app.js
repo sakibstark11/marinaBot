@@ -107,7 +107,7 @@ tank.stopAllMotors = function(){
 };
 
 io.sockets.on('connection', function(socket) {
-  
+  socket.on("disconnect", function(){console.log("Connection lost")});
   socket.on('keydown', function(dir) {
     switch(dir){
      case 'up':
@@ -142,7 +142,4 @@ io.sockets.on('connection', function(socket) {
   });
 
 });
-io.sockets.on('disconnect', function(){
-  console.log("connection lost");
-  });
 tank.initPins();
