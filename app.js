@@ -59,8 +59,10 @@ tank.moveForward = function(){
   ]);
 };
 tank.goup = function(){
-  vertical--;
-  async.parallel([
+  
+  async.parallel(
+    vertical--,
+    [
     gpio.write(p7,0),
     gpio.write(p11, 0),
     gpio.write(p13,1),
@@ -68,8 +70,10 @@ tank.goup = function(){
   ]);
 };
 tank.godown = function(){
-  vertical++;
-  async.parallel([
+  
+  async.parallel(
+    vertical++,
+    [
     gpio.write(p13,0),
     gpio.write(p15,0),
     gpio.write(p7,1),
