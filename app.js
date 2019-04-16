@@ -124,10 +124,7 @@ io.sockets.on('connection', function(socket) {
     console.log("Connection lost");
     var counttime = new Date().getTime();
     tank.goup();
-    while(new Date().getTime()-counttime < totaltime){
-    }
-    
-    
+    setTimeout(tank.stopAllMotors,totaltime);
     console.log("done");
 
 });
