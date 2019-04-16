@@ -84,17 +84,21 @@ tank.moveBackward = function(){
 };
 
 tank.turnRight = function(){
-  gpio.write(p7,1);
-  gpio.write(p13,1);
-  gpio.write(p11,0);
-  gpio.write(p15,1);
+  async.parallel([  
+  gpio.write(p7,1),
+  gpio.write(p13,1),
+  gpio.write(p11,0),
+  gpio.write(p15,1)
+]);
 };
 
 tank.turnLeft = function(){
-  gpio.write(p7,1);
-  gpio.write(p13,0);
-  gpio.write(p11,1);
-  gpio.write(p15,1);
+  async.parallel([ 
+  gpio.write(p7,1),
+  gpio.write(p13,0),
+  gpio.write(p11,1),
+  gpio.write(p15,1)
+]);
 };
 
 tank.stopAllMotors = function(){
@@ -137,13 +141,13 @@ io.sockets.on('connection', function(socket) {
       case 'goup':
         tank.goup();
         vertical--;
-        console.log("up");
+        console.log("up "+vertical);
 
         break;
       case 'godown':
         tank.godown();
         vertical++;
-        console.log("down");
+        console.log("down "+vertical);
         break;              
     }
   });
