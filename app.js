@@ -170,6 +170,7 @@ io.sockets.on('connection', function(socket) {
       var diff = time2 - time;
       console.log("diff "+ diff);
       totaltime -= diff;
+      console.log(totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
@@ -177,6 +178,7 @@ io.sockets.on('connection', function(socket) {
       var diff = time2 - time;
       console.log("diff "+ diff);
       totaltime += diff;
+      console.log(totaltime);
       tank.stopAllMotors();
       break;
       default:
