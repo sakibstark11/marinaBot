@@ -58,6 +58,7 @@ tank.moveForward = function(){
   ]);
 };
 tank.goup = function(){
+  vertical--;
   async.parallel([
     gpio.write(p7,0),
     gpio.write(p11, 0),
@@ -66,6 +67,7 @@ tank.goup = function(){
   ]);
 };
 tank.godown = function(){
+  vertical++;
   async.parallel([
     gpio.write(p13,0),
     gpio.write(p15,0),
@@ -140,13 +142,13 @@ io.sockets.on('connection', function(socket) {
         break;
       case 'goup':
         tank.goup();
-        vertical--;
+
         console.log("up "+vertical);
 
         break;
       case 'godown':
         tank.godown();
-        vertical++;
+
         console.log("down "+vertical);
         break;              
     }
