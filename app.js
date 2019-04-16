@@ -17,6 +17,7 @@ var express = require('express'),
     vertical,
     time,
     time2,
+    totaltime,
     io = sio.listen(app);
 
 // Configuration
@@ -161,9 +162,20 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('keyup', function(dir){
-    tank.stopAllMotors();
-    time2 = new Date();
-    console.log(time2-time);
+    switch(dir){
+      case 'goup':
+      time2 - new Date();
+      totaltime-=(time2-time);
+      console.log(totaltime);
+      break;
+      case 'godown':
+      time2 = new Date();
+      totaltime += time2-time;
+      console.log(totaltime);
+      break;
+      default:
+      tank.stopAllMotors();
+    }
   });
 
 });
