@@ -112,6 +112,7 @@ tank.turnLeft = function(){
 };
 
 tank.stopAllMotors = function(){
+  console.log("stop");
   async.parallel([
     gpio.write(p11, 1),
     gpio.write(p13, 1),
@@ -120,6 +121,7 @@ tank.stopAllMotors = function(){
   ]);
 };
 io.sockets.on('connection', function(socket) {
+  totaltime = 0;
   socket.on("disconnect", function(){
     console.log("Connection lost");
     var counttime = new Date().getTime();
