@@ -15,6 +15,8 @@ var express = require('express'),
     p15  = 15,
     app = module.exports = express.createServer(),
     vertical,
+    time,
+    time2,
     io = sio.listen(app);
 
 // Configuration
@@ -60,8 +62,7 @@ tank.moveForward = function(){
 };
 
 tank.goup = function(){
-  vertical--;
-  tank.stopAllMotors();
+  console.log(time2-time);
   async.parallel(
     [
     gpio.write(p7,0),
@@ -146,14 +147,12 @@ io.sockets.on('connection', function(socket) {
         console.log("right");
         break;
       case 'goup':
+        time = new Date();
         tank.goup();
-
         console.log("up "+vertical);
-
         break;
       case 'godown':
         tank.godown();
-
         console.log("down "+vertical);
         break;              
     }
@@ -161,6 +160,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('keyup', function(dir){
     tank.stopAllMotors();
+    time2 = new Date();
   });
 
 });
