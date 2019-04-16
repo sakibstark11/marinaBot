@@ -78,7 +78,7 @@ $(function () {
       case 81:
         if (!qIsDown) return;
         qIsDown = false;
-        socket.emit('keydown', 'goup');
+        socket.emit('keyup', 'goup');
         $('.goup').addClass('active');
         break;
       case 69:
