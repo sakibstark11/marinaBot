@@ -3,11 +3,13 @@
  */
 
 var express = require('express'),
+    Stopwatch = require("node-stopwatch").Stopwatch;
     routes = require('./routes'),
     sio = require('socket.io'),
     gpio = require('rpi-gpio'),
     crypto = require('crypto'),
     async = require('async'),
+    stopwatch = Stopwatch.create(),
     tank = {},
     p7  = 7,
     p11   = 11,
@@ -118,14 +120,10 @@ tank.stopAllMotors = function(){
   ]);
 };
 io.sockets.on('connection', function(socket) {
-   vertical= 0;
   socket.on("disconnect", function(){
     console.log("Connection lost");
-    if (vertical>0){
-      while(vertical>0){
-        tank.goup();
-      }
-    }
+    for (var temp = new Date().getTime();)
+
 
 });
   socket.on('keydown', function(dir) {
@@ -149,6 +147,7 @@ io.sockets.on('connection', function(socket) {
       case 'goup':
         time = new Date().getTime();
         console.log(time);
+        stopwatch.start();
         tank.goup();
         console.log("up");
         break;
@@ -164,18 +163,25 @@ io.sockets.on('connection', function(socket) {
   socket.on('keyup', function(dir){
     switch(dir){
       case 'goup':
-      time2 = new Date().getTime();
-      var diff = time2 - time;
-      console.log("diff "+ diff);
-      totaltime -= diff;
+      // time2 = new Date().getTime();
+      // var diff = time2 - time;
+      // console.log("diff "+ diff);
+      // totaltime -= diff;
+      // console.log("total " +totaltime);
+      totaltime -= stopwatch.elapsed.seconds;
+      stopwatch.stop();
       console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
-      time2 = new Date().getTime();
-      var diff = time2 - time;
-      console.log("diff "+ diff);
-      totaltime += diff;
+      // time2 = new Date().getTime();
+      // var diff = time2 - time;
+      // console.log("diff "+ diff);
+      // totaltime += diff;
+      // console.log("total " +totaltime);
+      
+      totaltime += stopwatch.elapsed.seconds;
+      stopwatch.stop();
       console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
