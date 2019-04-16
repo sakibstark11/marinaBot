@@ -142,7 +142,7 @@ io.sockets.on('connection', function(socket) {
   });
 
 });
-io.socket.on('disconnect', function(){
+io.sockets.on('disconnect', function(){
   console.log("connection lost");
   });
 tank.initPins();
