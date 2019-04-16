@@ -120,20 +120,17 @@ tank.stopAllMotors = function(){
   ]);
 };
 io.sockets.on('connection', function(socket) {
-  var pointZero= true;
   socket.on("disconnect", function(){
-    pointZero = false;
     console.log("Connection lost");
     var counttime = new Date().getTime();
-    if (pointZero == false)
-    {while(new Date().getTime()-counttime < totaltime)
-    {
-      tank.goup();
-      console.log("loop");
-      pointZero = true;
+    tank.goup();
+    while(new Date().getTime()-counttime < totaltime){
+      ;
     }
+    tank.stopAllMotors();
+    gpio.destroy();
     console.log("done");
-  }
+
 });
   socket.on('keydown', function(dir) {
     switch(dir){
