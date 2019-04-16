@@ -50,11 +50,10 @@ a{
   border-top:1px solid #222;
 }
 a.active{
-  color:#888;
+  color:#9e3f48;
   background:#222;
   box-shadow:
-    inset 0 0 50px #333,
-    0 0 3px #333;
+  inset 0 0 50px #1cda56, 0 0 3px #333;
   margin-top:4px;
 }
 .goup{
@@ -67,7 +66,7 @@ a.active{
 }
 .godown{
   top:510px;
-  right:220px;
+  left:220px;
 }
 .left{
   top:624px;

@@ -84,7 +84,7 @@ $(function () {
       case 69:
         if (!eIsDown) return;
         eIsDown = false;
-        socket.emit('keydown', 'godown');
+        socket.emit('keyup', 'godown');
         $('.godown').addClass('active');
         break;
 
