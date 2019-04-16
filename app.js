@@ -122,6 +122,12 @@ tank.stopAllMotors = function(){
 io.sockets.on('connection', function(socket) {
   socket.on("disconnect", function(){
     console.log("Connection lost");
+    var counttime = new Date().getTime();
+    while(new Date().getTime()-counttime < totaltime)
+    {
+      tank.goup();
+      console.log("loop");
+    }
 
 
 });
@@ -163,22 +169,22 @@ io.sockets.on('connection', function(socket) {
   socket.on('keyup', function(dir){
     switch(dir){
       case 'goup':
-      // time2 = new Date().getTime();
-      // var diff = time2 - time;
-      // console.log("diff "+ diff);
-      // totaltime -= diff;
-      // console.log("total " +totaltime);
+      time2 = new Date().getTime();
+      var diff = time2 - time;
+      console.log("diff "+ diff);
+      totaltime -= diff;
+      console.log("total " +totaltime);
       // totaltime -= stopwatch.elapsed.seconds;
       // stopwatch.stop();
       console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
-      // time2 = new Date().getTime();
-      // var diff = time2 - time;
-      // console.log("diff "+ diff);
-      // totaltime += diff;
-      // console.log("total " +totaltime);
+      time2 = new Date().getTime();
+      var diff = time2 - time;
+      console.log("diff "+ diff);
+      totaltime += diff;
+      console.log("total " +totaltime);
       
       // totaltime += stopwatch.elapsed.seconds;
       // stopwatch.stop();
