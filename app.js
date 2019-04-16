@@ -148,13 +148,13 @@ io.sockets.on('connection', function(socket) {
         break;
       case 'goup':
         vertical--;
-        time = new Date();
+        time = new Date().getTime();
         tank.goup();
         console.log("up "+vertical);
         break;
       case 'godown':
         vertical++;
-        time = new Date();
+        time = new Date().getTime();
         tank.godown();
         console.log("down "+vertical);
         break;              
@@ -164,14 +164,14 @@ io.sockets.on('connection', function(socket) {
   socket.on('keyup', function(dir){
     switch(dir){
       case 'goup':
-      time2 = new Date();
-      totaltime = totaltime-(time2-time);
+      time2 = new Date().getTime();
+      totaltime = totaltime - (time2-time);
       console.log(totaltime);
       tank.stopAllMotors();
       break;
       case 'godown':
-      time2 = new Date();
-      totaltime = totaltime+ (time2-time);
+      time2 = new Date().getTime();
+      totaltime = totaltime + (time2-time);
       console.log(totaltime);
       tank.stopAllMotors();
       break;
