@@ -58,8 +58,10 @@ tank.moveForward = function(){
 
   ]);
 };
+
 tank.goup = function(){
-  
+  vertical--;
+  tank.stopAllMotors();
   async.parallel(
     [
     gpio.write(p7,0),
@@ -68,8 +70,7 @@ tank.goup = function(){
     gpio.write(p15,1)
   ]);
 };
-tank.godown = function(){
-  
+tank.godown = function(){ 
   async.parallel(
     [
     gpio.write(p13,0),
