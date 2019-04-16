@@ -147,14 +147,14 @@ io.sockets.on('connection', function(socket) {
         time = new Date().getTime();
         console.log(time);
         tank.goup();
-        stopwatch.start();
+        // stopwatch.start();
         console.log("up");
         break;
       case 'godown':
         time = new Date().getTime();
         console.log(time);
         tank.godown();
-        stopwatch.start();
+        // stopwatch.start();
         console.log("down");
         break;              
     }
@@ -168,8 +168,8 @@ io.sockets.on('connection', function(socket) {
       // console.log("diff "+ diff);
       // totaltime -= diff;
       // console.log("total " +totaltime);
-      totaltime -= stopwatch.elapsed.seconds;
-      stopwatch.stop();
+      // totaltime -= stopwatch.elapsed.seconds;
+      // stopwatch.stop();
       console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
@@ -180,8 +180,8 @@ io.sockets.on('connection', function(socket) {
       // totaltime += diff;
       // console.log("total " +totaltime);
       
-      totaltime += stopwatch.elapsed.seconds;
-      stopwatch.stop();
+      // totaltime += stopwatch.elapsed.seconds;
+      // stopwatch.stop();
       console.log("total " +totaltime);
       tank.stopAllMotors();
       break;
