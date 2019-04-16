@@ -62,6 +62,10 @@ a.active{
   top:510px;
   left:110px;
 }
+.godown{
+  top:510px;
+  right:110px;
+}
 .left{
   top:624px;
   left:0;
@@ -74,3 +78,8 @@ a.active{
   right:0;
   top:624px;
 }
+.goup{
+  right:0;
+  top:624px;
+}
+

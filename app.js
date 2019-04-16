@@ -50,32 +50,59 @@ tank.initPins = function(){
 
 tank.moveForward = function(){
   async.parallel([
-    gpio.write(p11, 1),
-    gpio.write(p13, 1)
+    gpio.write(p7,0),
+    gpio.write(p15,0),
+    gpio.write(p11,1),
+    gpio.write(p13,1)
+
+  ]);
+};
+tank.goup = function(){
+  async.parallel([
+    gpio.write(p7,0),
+    gpio.write(p11, 0),
+    gpio.write(p13,1),
+    gpio.write(p15,1)
+  ]);
+};
+tank.godown = function(){
+  async.parallel([
+    gpio.write(p13,0),
+    gpio.write(p15,0),
+    gpio.write(p7,1),
+    gpio.write(p11,1)
   ]);
 };
 
 tank.moveBackward = function(){
   async.parallel([
-    gpio.write(p7, 1),
-    gpio.write(p15, 1)
+    gpio.write(p11,0),
+    gpio.write(p13,0),
+    gpio.write(p15,1),
+    gpio.write(p7,1)
   ]);
 };
 
 tank.turnLeft = function(){
-  gpio.write(p11, 1);
+  gpio.write(p7,1);
+  gpio.write(p13,1);
+  gpio.write(p11,0);
+  gpio.write(p15,1);
 };
 
 tank.turnRight = function(){
-  gpio.write(p7, 1);
+  gpio.write(p7,1);
+  gpio.write(p13,0);
+  gpio.write(p11,1);
+  gpio.write(p15,1);
 };
 
 tank.stopAllMotors = function(){
   async.parallel([
-    gpio.write(p11, 0),
-    gpio.write(p13, 0),
-    gpio.write(p15, 0),
-    gpio.write(p7, 0)
+    gpio.write(p11, 1),
+    gpio.write(p13, 1),
+    gpio.write(p15, 1),
+    gpio.write(p7, 1)
   ]);
 };
 
@@ -99,6 +126,14 @@ io.sockets.on('connection', function(socket) {
         tank.turnRight();
         console.log("right")
         break;
+      case 'goup':
+        tank.goup();
+        console.log("up")
+        break;
+      case 'godown':
+        tank.godown();
+        console.log("down")
+        break;              
     }
   });
 
