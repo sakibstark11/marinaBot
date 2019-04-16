@@ -3,7 +3,7 @@
  */
 
 var express = require('express'),
-    Stopwatch = require("node-stopwatch").Stopwatch;
+    Stopwatch = require("node-stopwatch").Stopwatch,
     routes = require('./routes'),
     sio = require('socket.io'),
     gpio = require('rpi-gpio'),
@@ -16,7 +16,7 @@ var express = require('express'),
     p13 = 13,
     p15  = 15,
     app = module.exports = express.createServer(),
-    vertical,
+
     time,
     time2,
     totaltime = 0,
