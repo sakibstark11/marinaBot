@@ -127,8 +127,8 @@ io.sockets.on('connection', function(socket) {
     while(new Date().getTime()-counttime < totaltime){
       ;
     }
-    tank.stopAllMotors();
-    gpio.destroy();
+    
+    
     console.log("done");
 
 });
