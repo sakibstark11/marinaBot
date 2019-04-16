@@ -123,11 +123,12 @@ io.sockets.on('connection', function(socket) {
   socket.on("disconnect", function(){
     console.log("Connection lost");
     var counttime = new Date().getTime();
-    while(new Date().getTime()-counttime != totaltime)
+    while(new Date().getTime()-counttime < totaltime)
     {
       tank.goup();
       console.log("loop");
     }
+    console.log("done");
 
 
 });
