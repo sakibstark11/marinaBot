@@ -10,13 +10,14 @@ var express = require('express'),
   crypto = require('crypto'),
   async = require('async'),
   usonic = require('r-pi-usonic'),
+  Gpio = require('pigpio').Gpio,
   tank = {},
   p7 = 7,
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 12,
-  echo = 16,
+  trig = new Gpio(12, {mode: Gpio.OUTPUT}),
+  echo = new Gpio(16, {mode: Gpio.INPUT, alert: true}),
   app = module.exports = express.createServer(),
   time,
   time2,
@@ -64,18 +65,31 @@ tank.moveForward = function () {
     gpio.write(p15, 0),
     gpio.write(p11, 1),
     gpio.write(p13, 1)
-
   ]);
 };
 tank.getDistance = function () {
-  gpio.write(trig,0);
-  gpio.write(trig,1);
-  gpio.write(trig,0);
-  var start,stop;
-  while(gpio.read(echo, callbackfunction(error, data)) == 0){start = Date.now();}
-  while(gpio.read(echo, callbackfunction(error, data)) == 1){stop = Date.now();}
-  var distance = ((stop-start)/1000.0)*17000
-  console.log("distance: "+ distance);
+  const MICROSECDONDS_PER_CM = 1e6/34321;
+  trig.digitalWrite(0); // Make sure trigger is low
+  let startTick;
+  echo.on('alert', (level, tick) => {
+    if (level == 1) {
+      startTick = tick;
+    } else {
+      const endTick = tick;
+      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+      console.log(diff / 2 / MICROSECDONDS_PER_CM);
+    }
+  });
+};
+
+  // gpio.write(trig,0);
+  // gpio.write(trig,1);
+  // gpio.write(trig,0);
+  // var start,stop;
+  // while(gpio.read(echo) == 0){start = Date.now();}
+  // while(gpio.read(echo) == 1){stop = Date.now();}
+  // var distance = ((stop-start)/1000.0)*17000
+  // console.log("distance: "+ distance);
 };
 
 tank.goup = function () {
@@ -109,7 +123,6 @@ tank.moveBackward = function () {
       gpio.write(p7, 1)
     ]);
 };
-
 tank.turnRight = function () {
   console.log("right");
   async.parallel([
@@ -119,7 +132,6 @@ tank.turnRight = function () {
     gpio.write(p15, 1)
   ]);
 };
-
 tank.turnLeft = function () {
   console.log("left");
   async.parallel([
@@ -129,8 +141,6 @@ tank.turnLeft = function () {
     gpio.write(p15, 1)
   ]);
 };
-
-
 tank.stopAllMotors = function () {
   console.log("stop");
   async.parallel([
