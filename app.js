@@ -128,16 +128,16 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  var nosig,sig;
-  gpio.write(trig,0);
-  while(gpio.read(echo) == 0){
-    nosig = new Date().getTime();
-  }
-  while (gpio.read(echo) == 1){
-    sig = new Date().getTime();
-  }
-  distance = (sig-nosig)/0.000148;
-  console.log(distance);
+  // var nosig,sig;
+  // gpio.write(trig,0);
+  // while(gpio.read(echo) == 0){
+  //   nosig = new Date().getTime();
+  // }
+  // while (gpio.read(echo) == 1){
+  //   sig = new Date().getTime();
+  // }
+  // distance = (sig-nosig)/0.000148;
+  // console.log(distance);
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
