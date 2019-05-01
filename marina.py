@@ -9,7 +9,6 @@ def distance():
     gpio.setmode(gpio.BOARD)
     gpio.setup(trig,gpio.OUT)
     gpio.setup(echo,gpio.IN)
-    gpio.output(echo,gpio.LOW)
     gpio.output(trig,1)
     time.sleep(0.00001)
     gpio.output(trig,0)
