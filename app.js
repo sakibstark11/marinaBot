@@ -18,16 +18,17 @@ var express = require('express'),
   p15 = 15,
   trig = 12,
   echo = 16,
-  sensor = usonic.createSensor(echo, trig, 10),
   distance,
   app = module.exports = express.createServer(),
   time,
   time2,
   totaltime = 0,
   io = sio.listen(app);
+
 usonic.init(function (error) {
   if (error) {
     console.log("Error Mate");
+
   } else {
     // var sensor = usonic.createSensor(echo, trig, 10);
     // distance = sensor();
@@ -173,7 +174,9 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        console.log("distance: " + sensor());
+        var sensor = usonic.createSensor(echo, trig, 10);
+        distance = sensor();
+        console.log("distance: " + distance);
         break;
       case 'down':
         tank.moveBackward();
