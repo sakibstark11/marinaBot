@@ -18,6 +18,7 @@ var express = require('express'),
   p15 = 15,
   trig = 12,
   echo = 16,
+  sensor = usonic.createSensor(echo, trig, 10),
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -172,7 +173,6 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        var sensor = usonic.createSensor(echo, trig, 10);
         console.log("distance: " + sensor());
         break;
       case 'down':
