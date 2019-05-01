@@ -25,14 +25,12 @@ var express = require('express'),
   totaltime = 0,
   io = sio.listen(app);
 usonic.init(function (error) {
-    if (error) {
-      console.log("Error Mate");
-      var sensor = usonic.createSensor(echo, trig, 10);
-      distance = sensor();
-    } else {
-        var sensor = usonic.createSensor(echo, trig, 10);
-        // distance = sensor();
-    }
+  if (error) {
+    console.log("Error Mate");
+  } else {
+    // var sensor = usonic.createSensor(echo, trig, 10);
+    // distance = sensor();
+  }
 });
 // Configuration
 app.configure(function () {
@@ -164,7 +162,7 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    
+
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
@@ -174,7 +172,8 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        console.log("distance: "+distance);
+        var sensor = usonic.createSensor(echo, trig, 10);
+        console.log("distance: " + sensor());
         break;
       case 'down':
         tank.moveBackward();
@@ -218,5 +217,4 @@ io.sockets.on('connection', function (socket) {
     }
   });
 });
-usonic.init();
 tank.initPins();
