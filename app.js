@@ -1,7 +1,6 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
   Stopwatch = require("node-stopwatch").Stopwatch,
   routes = require('./routes'),
@@ -15,7 +14,7 @@ var express = require('express'),
   p13 = 13,
   p15 = 15,
   trig = 16,
-  echo = 12, 
+  echo = 12,
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -31,28 +30,22 @@ app.configure(function () {
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
-
 app.configure('development', function () {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
-
 app.configure('production', function () {
   app.use(express.errorHandler());
 });
-
 // Routes
 app.get('/', routes.index);
-
 var gpio_read = function (channel) {
   new Promise(resolve => {
-      gpio.read(channel, function (error, result) {
-          console.log('gpio.read', error, result);
-          resolve(result);
-      });
+    gpio.read(channel, function (error, result) {
+      console.log('gpio.read', error, result);
+      resolve(result);
+    });
   });
 }
-
-
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
@@ -65,7 +58,6 @@ tank.initPins = function () {
     gpio.setup(trig, gpio.DIR_OUT)
   ]);
 };
-
 tank.moveForward = function () {
   console.log("forward");
   async.parallel([
@@ -75,19 +67,23 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-var off = function(){
-  gpio.write(trig,0);
+var off = function () {
+  gpio.write(trig, 0);
 }
 tank.getDistance = function () {
   var start, stop;
-  gpio.write(trig,0);
-  gpio.write(trig,1);
-  setTimeout(off,10);
-  while (gpio_read(echo) === 0) { start = Date.now();
-  console.log("nosig"); }
-  while (gpio_read(echo) === 1) { stop = Date.now();
-  console.log("sig"); }
-  console.log(stop-start);
+  gpio.write(trig, 0);
+  gpio.write(trig, 1);
+  setTimeout(off, 10);
+  while (gpio_read(echo) === 0) {
+    start = Date.now();
+    console.log("nosig");
+  }
+  while (gpio_read(echo) === 1) {
+    stop = Date.now();
+    console.log("sig");
+  }
+  console.log(stop - start);
 };
 tank.goup = function () {
   console.log("up");
@@ -109,7 +105,6 @@ tank.godown = function () {
       gpio.write(p11, 1)
     ]);
 };
-
 tank.moveBackward = function () {
   console.log("reverse");
   async.parallel(
