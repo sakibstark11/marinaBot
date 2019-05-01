@@ -87,7 +87,7 @@ tank.getDistance = function () {
   var temp = (stop - start)/1000;
   console.log(temp);
   distance = temp/0.000148;
-  console.log("distance: "+distance);
+  console.log("distance: "+ distance);
 };
 tank.goup = function () {
   console.log("up");
@@ -162,7 +162,6 @@ io.sockets.on('connection', function (socket) {
       case 'up':
         tank.moveForward();
         tank.getDistance();
-        console.log("distance: " + distance);
         break;
       case 'down':
         tank.moveBackward();
