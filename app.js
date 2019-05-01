@@ -75,19 +75,19 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
+var off = function(){
+  gpio.write(trig,0);
+}
 tank.getDistance = function () {
   var start, stop;
   gpio.write(trig,0);
   gpio.write(trig,1);
+  setTimeout(off,10);
   while (gpio_read(echo) == 0) { start = Date.now();
   console.log("nosig"); }
   while (gpio_read(echo) == 1) { stop = Date.now();
   console.log("sig"); }
-  gpio.write(trig,0);
-  var temp = (stop - start)/1000;
-  console.log(temp);
-  distance = temp/0.000148;
-  console.log("distance: "+ distance);
+  console.log(stop-start);
 };
 tank.goup = function () {
   console.log("up");
