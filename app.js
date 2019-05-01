@@ -176,6 +176,7 @@ io.sockets.on('connection', function (socket) {
         tank.moveForward();
         // var sensor = usonic.createSensor(echo, trig, 10);
         // distance = sensor();
+        tank.getDistance();
         console.log("distance: " + distance);
         break;
       case 'down':
