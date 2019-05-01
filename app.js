@@ -20,7 +20,7 @@ var express = require('express'),
   trig = 12,
   echo = 16,
   app = module.exports = express.createServer(),
-
+  
   time,
   time2,
   totaltime = 0,
@@ -69,7 +69,11 @@ tank.moveForward = function () {
 
   ]);
 };
-
+usonic.init(function (error) {
+  if (error) {
+    console.log('Error')
+  }
+});
 tank.goup = function () {
   async.parallel(
     [
@@ -117,15 +121,9 @@ tank.turnLeft = function () {
   ]);
 };
 function autonomy() {
-  
-  usonic.init(function (error) {
-    if (error) {
-        console.log('Error')
-    } else {
         var sensor = usonic.createSensor(echo, trig, 450);
         distance = sensor();
-    }
-});
+};
   console.log(distance);
   gpio.reset();
 }
