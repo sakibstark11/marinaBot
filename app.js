@@ -226,3 +226,4 @@ io.sockets.on('connection', function (socket) {
 
 });
 tank.initPins();
+tank.getDistance();
