@@ -74,7 +74,7 @@ def down(tf):
     gpio.output(11,gpio.HIGH)
     time.sleep(tf)
     gpio.cleanup()
-print(distance);    
+print(distance()) 
 #def key(event):
  #   init()
   #  print ("key: ", event.char)
