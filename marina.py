@@ -4,11 +4,14 @@ import Tkinter as tk
 import sys
 
 def distance():
+    gpio.cleanup()
     echo = 12
     trig = 16
     gpio.setmode(gpio.BOARD)
     gpio.setup(trig,gpio.OUT)
     gpio.setup(echo,gpio.IN)
+    gpio.output(trig,0)
+    gpio.output(echo,0)
     gpio.output(trig,1)
     time.sleep(0.00001)
     gpio.output(trig,0)
