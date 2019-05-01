@@ -54,9 +54,9 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT)
-   // gpio.setup(trig, gpio.DIR_OUT),
-    //gpio.setup(echo, gpio.DIR_IN)
+    gpio.setup(p15, gpio.DIR_OUT),
+    gpio.setup(trig, gpio.DIR_OUT),
+    gpio.setup(echo, gpio.DIR_IN)
   ]);
 };
 
@@ -69,11 +69,7 @@ tank.moveForward = function () {
 
   ]);
 };
-usonic.init(function (error) {
-  if (error) {
-    console.log('Error')
-  }else {sensor = usonic.createSensor(echo, trig, 450);}
-});
+
 tank.goup = function () {
   async.parallel(
     [
@@ -120,11 +116,6 @@ tank.turnLeft = function () {
     gpio.write(p15, 1)
   ]);
 };
-function autonomy() {
-        distance = sensor();
-        console.log(distance);
-        gpio.reset();
-};
 
 
 tank.stopAllMotors = function () {
@@ -137,7 +128,16 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  autonomy();
+  var nosig,sig;
+  gpio.write(trig,0);
+  while(gpio.read(echo) == 0){
+    nosig = new Date().getTime();
+  }
+  while (gpio.read(echo) == 1){
+    sig = new Date().getTime();
+  }
+  distance = (sig-nosig)/0.000148;
+  console.log(distance);
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
