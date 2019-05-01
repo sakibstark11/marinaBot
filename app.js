@@ -154,6 +154,7 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
+        tank.getDistance();
         break;
       case 'down':
         tank.moveBackward();
