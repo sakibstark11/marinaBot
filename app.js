@@ -69,6 +69,18 @@ tank.moveForward = function () {
 
   ]);
 };
+tank.getDistance = function () {
+  async.parallel([
+    gpio.write(trig,0),
+    gpio.write(trig,1),
+    gpio.write(trig,0),
+  ]);
+  var start,stop;
+  while(gpio.read(echo) == 0){start = new Date().getTime();}
+  while(gpio.read(echo) == 1){stop = new Date().getTime();}
+  distance = (stop-start)*17000
+  console.log("distance: "+ distance);
+};
 
 tank.goup = function () {
   async.parallel(
