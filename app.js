@@ -218,4 +218,5 @@ io.sockets.on('connection', function (socket) {
     }
   });
 });
+usonic.init();
 tank.initPins();
