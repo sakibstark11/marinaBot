@@ -25,15 +25,15 @@ var express = require('express'),
   totaltime = 0,
   io = sio.listen(app);
 
-usonic.init(function (error) {
-  if (error) {
-    console.log("Error Mate");
+// usonic.init(function (error) {
+//   if (error) {
+//     console.log("Error Mate");
 
-  } else {
-    // var sensor = usonic.createSensor(echo, trig, 10);
-    // distance = sensor();
-  }
-});
+//   } else {
+//     // var sensor = usonic.createSensor(echo, trig, 10);
+//     // distance = sensor();
+//   }
+// });
 // Configuration
 app.configure(function () {
   app.set('views', __dirname + '/views');
@@ -62,7 +62,9 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT)
+    gpio.setup(p15, gpio.DIR_OUT),
+    gpio.setup(echo, gpio.DIR_OUT),
+    gpio.setup(trig, gpio.DIR_IN),
   ]);
 };
 
@@ -75,20 +77,18 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
+function callback(error,data){
+  console.log("in callback");
+}
 tank.getDistance = function () {
-
-
-
-
-
-  // gpio.write(trig,0);
-  // gpio.write(trig,1);
-  // gpio.write(trig,0);
-  // var start,stop;
-  // while(gpio.read(echo) == 0){start = Date.now();}
-  // while(gpio.read(echo) == 1){stop = Date.now();}
-  // var distance = ((stop-start)/1000.0)*17000
-  // console.log("distance: "+ distance);
+  gpio.write(trig,0);
+  gpio.write(trig,1);
+  gpio.write(trig,0);
+  var start,stop;
+  while(gpio.read(echo,callback(error,data)) == 0){start = Date.now();}
+  while(gpio.read(echo,callback(error,data)) == 1){stop = Date.now();}
+  var distance = ((stop-start)/1000.0)*17000
+  console.log("distance: "+ distance);
   // var MICROSECDONDS_PER_CM = 1e6/34321;
   // trig.digitalWrite(0); // Make sure trigger is low
   // var startTick;
