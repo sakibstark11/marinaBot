@@ -38,14 +38,14 @@ app.configure('production', function () {
 });
 // Routes
 app.get('/', routes.index);
-var gpio_read = function (channel) {
-  new Promise(resolve => {
-    gpio.read(channel, function (error, result) {
-      console.log('gpio.read', error, result);
-      resolve(result);
-    });
-  });
-}
+// var gpio_read = function (channel) {
+//   new Promise(resolve => {
+//     gpio.read(channel, function (error, result) {
+//       console.log('gpio.read', error, result);
+//       resolve(result);
+//     });
+//   });
+// }
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
@@ -75,11 +75,11 @@ tank.getDistance = function () {
   gpio.write(trig, 0);
   gpio.write(trig, 1);
   setTimeout(off, 10);
-  while (gpio_read(echo) === 0) {
+  while (gpio.read(echo,function(err,value){if (err) throw err;}) === 0) {
     start = Date.now();
     console.log("nosig");
   }
-  while (gpio_read(echo) === 1) {
+  while (gpio.read(echo,function(err,value){if (err) throw err;}) === 1) {
     stop = Date.now();
     console.log("sig");
   }
