@@ -68,20 +68,6 @@ tank.moveForward = function () {
   ]);
 };
 tank.getDistance = function () {
-  const MICROSECDONDS_PER_CM = 1e6/34321;
-  trig.digitalWrite(0); // Make sure trigger is low
-  let startTick;
-  echo.on('alert', (level, tick) => {
-    if (level == 1) {
-      startTick = tick;
-    } else {
-      const endTick = tick;
-      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log(diff / 2 / MICROSECDONDS_PER_CM);
-    }
-  });
-};
-
   // gpio.write(trig,0);
   // gpio.write(trig,1);
   // gpio.write(trig,0);
@@ -90,7 +76,21 @@ tank.getDistance = function () {
   // while(gpio.read(echo) == 1){stop = Date.now();}
   // var distance = ((stop-start)/1000.0)*17000
   // console.log("distance: "+ distance);
+  var MICROSECDONDS_PER_CM = 1e6/34321;
+  trig.digitalWrite(0); // Make sure trigger is low
+  var startTick;
+  echo.on('alert', (level, tick) => {
+    if (level == 1) {
+      startTick = tick;
+    } else {
+      var endTick = tick;
+      var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+      console.log(diff / 2 / MICROSECDONDS_PER_CM);
+    }
+  });
 };
+
+
 
 tank.goup = function () {
   console.log("up");
