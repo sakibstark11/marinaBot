@@ -9,5 +9,6 @@
     , "rpi-gpio" : "*"
     , "node-stopwatch" : "*"
     , "r-pi-usonic" : "*"
+    , "pigpio" : "*"
   }
 }
