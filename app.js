@@ -153,9 +153,10 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    tank.goup();
-    setTimeout(tank.stopAllMotors, totaltime);
-    console.log("done");
+    tank.getDistance();
+    // tank.goup();
+    // setTimeout(tank.stopAllMotors, totaltime);
+    // console.log("done");
 
   });
   socket.on('keydown', function (dir) {
