@@ -71,14 +71,14 @@ tank.moveForward = function () {
 var off = function () {
 }
 const watchHCSR04 = () => {
-  let startTick;
+  var startTick;
 
   echo.on('alert', (level, tick) => {
     if (level === 1) {
       startTick = tick;
     } else {
-      const endTick = tick;
-      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+      var endTick = tick;
+      var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
       console.log(diff / 2 / MICROSECDONDS_PER_CM);
     }
   });
