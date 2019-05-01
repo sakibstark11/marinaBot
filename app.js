@@ -83,7 +83,9 @@ tank.getDistance = function () {
     stop = Date.now();
     console.log("sig");
   }
-  console.log(stop-start);
+  distance = 0;
+  distance = stop - start;
+  console.log(distance);
 };
 tank.goup = function () {
   console.log("up");
