@@ -77,7 +77,7 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-function callback(error,data){
+function callback(){
   console.log("in callback");
 }
 tank.getDistance = function () {
@@ -85,8 +85,8 @@ tank.getDistance = function () {
   gpio.write(trig,1);
   gpio.write(trig,0);
   var start,stop;
-  while(gpio.read(echo,callback(error,data)) == 0){start = Date.now();}
-  while(gpio.read(echo,callback(error,data)) == 1){stop = Date.now();}
+  while(gpio.read(echo,callback()) == 0){start = Date.now();}
+  while(gpio.read(echo,callback()) == 1){stop = Date.now();}
   distance = ((stop-start)/1000.0)*17000
   console.log("distance: "+ distance);
   // var MICROSECDONDS_PER_CM = 1e6/34321;
