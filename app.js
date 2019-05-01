@@ -9,29 +9,19 @@ var express = require('express'),
   gpio = require('rpi-gpio'),
   crypto = require('crypto'),
   async = require('async'),
-  usonic = require('r-pi-usonic'),
-  //Gpio = require('onoff').Gpio;
   tank = {},
   p7 = 7,
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 12,//new Gpio(18,'out'),//12,
-  echo = 16,//new Gpio(23, 'in'),//16 
+  trig = 16,
+  echo = 12, 
   distance,
   app = module.exports = express.createServer(),
   time,
   time2,
   totaltime = 0,
   io = sio.listen(app);
-// usonic.init(function (error) {
-//   if (error) {
-//     console.log("Error Mate");
-//   } else {
-//     // var sensor = usonic.createSensor(echo, trig, 10);
-//     // distance = sensor();
-//   }
-// });
 // Configuration
 app.configure(function () {
   app.set('views', __dirname + '/views');
@@ -63,12 +53,9 @@ var gpio_read = function (channel) {
 }
 
 
-
-
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
-  gpio.reset();
   async.parallel([
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
