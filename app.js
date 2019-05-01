@@ -11,6 +11,7 @@ var express = require('express'),
   async = require('async'),
   stopwatch = Stopwatch.create(),
   tank = {},
+  distance = 0,
   p7 = 7,
   p11 = 11,
   p13 = 13,
@@ -115,7 +116,7 @@ tank.turnLeft = function () {
   ]);
 };
 function distance() {
-  var nosig, sig, distance;
+  var nosig, sig;
   gpio.write(trig, 0);
   while (gpio.read(echo) == 0) {
     nosig = new Date().getTime();
@@ -125,8 +126,6 @@ function distance() {
   }
   distance = (sig - nosig)/0.000148;
   gpio.reset();
-  return distance;
-
 }
 
 tank.stopAllMotors = function () {
@@ -139,7 +138,7 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  console.log(distance());
+  console.log(distance);
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
