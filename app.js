@@ -16,14 +16,22 @@ var express = require('express'),
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = new Gpio(12, {mode: Gpio.OUTPUT}),
-  echo = new Gpio(16, {mode: Gpio.INPUT, alert: true}),
+  trig = 12,
+  echo = 16,
+  distance,
   app = module.exports = express.createServer(),
   time,
   time2,
   totaltime = 0,
   io = sio.listen(app);
-
+usonic.init(function (error) {
+    if (error) {
+      console.log("Error Mate");
+    } else {
+        var sensor = usonic.createSensor(echo, trig, 10);
+        distance = sensor();
+    }
+});
 // Configuration
 app.configure(function () {
   app.set('views', __dirname + '/views');
@@ -66,6 +74,11 @@ tank.moveForward = function () {
   ]);
 };
 tank.getDistance = function () {
+
+
+
+
+
   // gpio.write(trig,0);
   // gpio.write(trig,1);
   // gpio.write(trig,0);
@@ -74,22 +87,19 @@ tank.getDistance = function () {
   // while(gpio.read(echo) == 1){stop = Date.now();}
   // var distance = ((stop-start)/1000.0)*17000
   // console.log("distance: "+ distance);
-  var MICROSECDONDS_PER_CM = 1e6/34321;
-  trig.digitalWrite(0); // Make sure trigger is low
-  var startTick;
-  echo.on('alert', (level, tick) => {
-    if (level == 1) {
-      startTick = tick;
-    } else {
-      var endTick = tick;
-      var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log(diff / 2 / MICROSECDONDS_PER_CM);
-    }
-  });
+  // var MICROSECDONDS_PER_CM = 1e6/34321;
+  // trig.digitalWrite(0); // Make sure trigger is low
+  // var startTick;
+  // echo.on('alert', (level, tick) => {
+  //   if (level == 1) {
+  //     startTick = tick;
+  //   } else {
+  //     var endTick = tick;
+  //     var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+  //     console.log(diff / 2 / MICROSECDONDS_PER_CM);
+  //   }
+  // });
 };
-
-
-
 tank.goup = function () {
   console.log("up");
   async.parallel(
@@ -162,7 +172,7 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        tank.getDistance();
+        console.log("distance: "+distance);
         break;
       case 'down':
         tank.moveBackward();
@@ -206,4 +216,5 @@ io.sockets.on('connection', function (socket) {
     }
   });
 });
+usonic.init();
 tank.initPins();
