@@ -10,14 +10,14 @@ var express = require('express'),
   crypto = require('crypto'),
   async = require('async'),
   usonic = require('r-pi-usonic'),
-  Gpio = require('pigpio').Gpio,
+  Gpio = require('onoff').Gpio;
   tank = {},
   p7 = 7,
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 12,
-  echo = 16,
+  trig = new Gpio(18,'out'),//12,
+  echo = new Gpio(23, 'in'),//16 
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -62,12 +62,26 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT),
-    gpio.setup(echo, gpio.DIR_OUT),
-    gpio.setup(trig, gpio.DIR_IN),
+    gpio.setup(p15, gpio.DIR_OUT)
+    //gpio.setup(echo, gpio.DIR_OUT),
+    //gpio.setup(trig, gpio.DIR_IN),
   ]);
 };
-
+function autonomy(){
+  trig.writeSync(0);
+  trig.writeSync(1);
+  trig.writeSync(0);
+  var sig, nosig;
+  while(echo.readSync() === 0){
+    nosig = Date.now();
+  }
+  while(echo.readSync() === 1){
+    sig = Date.now();
+  }
+  var temp = (sig - nosig)/1000.00;
+  distance = temp*17000; 
+  console.log("distance: "+distance);
+}
 tank.moveForward = function () {
   console.log("forward");
   async.parallel([
@@ -80,28 +94,28 @@ tank.moveForward = function () {
 function callback(){
   console.log("in callback");
 }
-tank.getDistance = function () {
-  gpio.write(trig,0);
-  gpio.write(trig,1);
-  gpio.write(trig,0);
-  var start,stop;
-  while(gpio.read(echo,callback()) == 0){start = Date.now();}
-  while(gpio.read(echo,callback()) == 1){stop = Date.now();}
-  distance = ((stop-start)/1000.0)*17000
-  console.log("distance: "+ distance);
-  // var MICROSECDONDS_PER_CM = 1e6/34321;
-  // trig.digitalWrite(0); // Make sure trigger is low
-  // var startTick;
-  // echo.on('alert', (level, tick) => {
-  //   if (level == 1) {
-  //     startTick = tick;
-  //   } else {
-  //     var endTick = tick;
-  //     var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-  //     console.log(diff / 2 / MICROSECDONDS_PER_CM);
-  //   }
-  // });
-};
+// tank.getDistance = function () {
+//   gpio.write(trig,0);
+//   gpio.write(trig,1);
+//   gpio.write(trig,0);
+//   var start,stop;
+//   while(gpio.read(echo,callback()) == 0){start = Date.now();}
+//   while(gpio.read(echo,callback()) == 1){stop = Date.now();}
+//   distance = ((stop-start)/1000.0)*17000
+//   console.log("distance: "+ distance);
+//   // var MICROSECDONDS_PER_CM = 1e6/34321;
+//   // trig.digitalWrite(0); // Make sure trigger is low
+//   // var startTick;
+//   // echo.on('alert', (level, tick) => {
+//   //   if (level == 1) {
+//   //     startTick = tick;
+//   //   } else {
+//   //     var endTick = tick;
+//   //     var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+//   //     console.log(diff / 2 / MICROSECDONDS_PER_CM);
+//   //   }
+//   // });
+// };
 tank.goup = function () {
   console.log("up");
   async.parallel(
@@ -176,7 +190,7 @@ io.sockets.on('connection', function (socket) {
         tank.moveForward();
         // var sensor = usonic.createSensor(echo, trig, 10);
         // distance = sensor();
-        tank.getDistance();
+        autonomy();
         console.log("distance: " + distance);
         break;
       case 'down':

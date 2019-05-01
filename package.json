@@ -10,5 +10,6 @@
     , "node-stopwatch" : "*"
     , "r-pi-usonic" : "*"
     , "pigpio" : "*"
+    , "onoff" : "*"
   }
 }
