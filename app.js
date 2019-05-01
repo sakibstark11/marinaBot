@@ -114,7 +114,7 @@ tank.turnLeft = function () {
     gpio.write(p15, 1)
   ]);
 };
-function autonomy() {
+function distance() {
   var nosig, sig, distance;
   gpio.write(trig, 0);
   while (gpio.read(echo) == 0) {
@@ -124,7 +124,9 @@ function autonomy() {
     sig = new Date().getTime();
   }
   distance = (sig - nosig)/0.000148;
+  gpio.reset();
   return distance;
+
 }
 
 tank.stopAllMotors = function () {
@@ -137,7 +139,7 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  console.log(autonomy());
+  console.log(distance());
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
