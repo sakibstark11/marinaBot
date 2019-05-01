@@ -19,7 +19,6 @@ var express = require('express'),
   trig = 12,
   echo = 16,
   app = module.exports = express.createServer(),
-  sensor,
   time,
   time2,
   totaltime = 0,
@@ -60,6 +59,7 @@ tank.initPins = function () {
 };
 
 tank.moveForward = function () {
+  console.log("forward");
   async.parallel([
     gpio.write(p7, 0),
     gpio.write(p15, 0),
@@ -83,6 +83,7 @@ tank.getDistance = function () {
 };
 
 tank.goup = function () {
+  console.log("up");
   async.parallel(
     [
       gpio.write(p7, 0),
@@ -92,6 +93,7 @@ tank.goup = function () {
     ]);
 };
 tank.godown = function () {
+  console.log("down");
   async.parallel(
     [
       gpio.write(p13, 0),
@@ -102,6 +104,7 @@ tank.godown = function () {
 };
 
 tank.moveBackward = function () {
+  console.log("reverse");
   async.parallel(
     [
       gpio.write(p11, 0),
@@ -112,6 +115,7 @@ tank.moveBackward = function () {
 };
 
 tank.turnRight = function () {
+  console.log("right");
   async.parallel([
     gpio.write(p7, 1),
     gpio.write(p13, 1),
@@ -121,6 +125,7 @@ tank.turnRight = function () {
 };
 
 tank.turnLeft = function () {
+  console.log("left");
   async.parallel([
     gpio.write(p7, 1),
     gpio.write(p13, 0),
@@ -140,17 +145,6 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-
-  // var nosig,sig;
-  // gpio.write(trig,0);
-  // while(gpio.read(echo) == 0){
-  //   nosig = new Date().getTime();
-  // }
-  // while (gpio.read(echo) == 1){
-  //   sig = new Date().getTime();
-  // }
-  // distance = (sig-nosig)/0.000148;
-  // console.log(distance);
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
@@ -164,43 +158,26 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        console.log("forward");
-        tank.getDistance();
         break;
       case 'down':
         tank.moveBackward();
-        console.log("reverse");
-        tank.getDistance();
         break;
       case 'left':
         tank.turnLeft();
-        console.log("left");
-        tank.getDistance();
         break;
       case 'right':
         tank.turnRight();
-        console.log("right");
-        tank.getDistance();
         break;
       case 'goup':
         time = new Date().getTime();
-        console.log(time);
         tank.goup();
-        tank.getDistance();
-        // stopwatch.start();
-        console.log("up");
         break;
       case 'godown':
         time = new Date().getTime();
-        console.log(time);
         tank.godown();
-        // stopwatch.start();
-        console.log("down");
-        tank.getDistance();
         break;
     }
   });
-
   socket.on('keyup', function (dir) {
     switch (dir) {
       case 'goup':
@@ -208,9 +185,6 @@ io.sockets.on('connection', function (socket) {
         var diff = time2 - time;
         console.log("diff " + diff);
         totaltime -= diff;
-        console.log("total " + totaltime);
-        // totaltime -= stopwatch.elapsed.seconds;
-        // stopwatch.stop();
         console.log("total " + totaltime);
         tank.stopAllMotors();
         break;
@@ -220,16 +194,11 @@ io.sockets.on('connection', function (socket) {
         console.log("diff " + diff);
         totaltime += diff;
         console.log("total " + totaltime);
-
-        // totaltime += stopwatch.elapsed.seconds;
-        // stopwatch.stop();
-        console.log("total " + totaltime);
         tank.stopAllMotors();
         break;
       default:
         tank.stopAllMotors();
     }
   });
-
 });
 tank.initPins();
