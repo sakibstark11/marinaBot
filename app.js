@@ -9,13 +9,14 @@ var express = require('express'),
   wpi = require('wiring-pi'),
   crypto = require('crypto'),
   async = require('async'),
+  Gpio = require('pigpio').Gpio,
   tank = {},
   p7 = 7,
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 4,
-  echo = 1,
+  trig = 23,
+  echo = 18,
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -68,20 +69,25 @@ tank.moveForward = function () {
   ]);
 };
 var off = function () {
-  wpi.digitalWrite(trig, 0);
 }
+
 tank.getDistance = function () {
-  var stop,start = 0;
-  wpi.setup('wpi');
-  wpi.pinMode(echo, wpi.INPUT);
-  wpi.pinMode(trig,wpi.OUTPUT);
-  wpi.digitalWrite(trig,1);
-  setTimeout(off, 100);
-  while(wpi.digitalRead(echo)==0){start = Date.now();}
-  while(wpi.digitalRead(echo)==1){stop = Date.now();}
-  console.log(stop);
-  console.log(start);
+  var MICROSECDONDS_PER_CM = 1e6 / 34321;
+  var trigger = new Gpio(trig, { mode: Gpio.OUTPUT });
+  var echo = new Gpio(echo, { mode: Gpio.INPUT, alert: true });
+  trigger.digitalWrite(0); // Make sure trigger is low
+  var startTick;
+  echo.on('alert', (level, tick) => {
+    if (level === 1) {
+      startTick = tick;
+    } else {
+      const endTick = tick;
+      const diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+      console.log(diff / 2 / MICROSECDONDS_PER_CM);
+    }
+  });
 };
+
 tank.goup = function () {
   console.log("up");
   async.parallel(
