@@ -74,29 +74,30 @@ def down(tf):
     gpio.output(11,gpio.HIGH)
     time.sleep(tf)
     gpio.cleanup()
-def key(event):
-    init()
-    print ("key: ", event.char)
-    key = event.char
-    tf = 0.20
-    if key.lower() == 'w':
-        forward(tf)
-    elif key.lower() == 's':
-        reverse(tf)
-    elif key.lower() == 'a':
-        left(tf)
-    elif key.lower() == 'd':
-        right(tf)
-    elif key.lower() == 'q':
-        up(tf)
-    elif key.lower() == 'e':
-        down(tf) 
-    else:
-        pass
+print(distance);    
+#def key(event):
+ #   init()
+  #  print ("key: ", event.char)
+   # key = event.char
+    #tf = 0.20
+ #   if key.lower() == 'w':
+  #      forward(tf)
+  #  elif key.lower() == 's':
+      #  reverse(tf)
+  #  elif key.lower() == 'a':
+     #   left(tf)
+  #  elif key.lower() == 'd':
+    #    right(tf)
+  #  elif key.lower() == 'q':
+   #     up(tf)
+  #  elif key.lower() == 'e':
+     #   down(tf) 
+    #else:
+        #pass
 
-command = tk.Tk()
-command.bind ('<KeyPress>', key)
-command.mainloop()
+#command = tk.Tk()
+#command.bind ('<KeyPress>', key)
+#command.mainloop()
 
 
 
