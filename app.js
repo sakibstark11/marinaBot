@@ -78,21 +78,7 @@ tank.initPins = function () {
     //gpio.setup(trig, gpio.DIR_IN),
   ]);
 };
-function autonomy(){
-  trig.writeSync(0);
-  trig.writeSync(1);
-  trig.writeSync(0);
-  var sig, nosig;
-  while(echo.readSync() === 0){
-    nosig = Date.now();
-  }
-  while(echo.readSync() === 1){
-    sig = Date.now();
-  }
-  var temp = (sig - nosig)/1000.00;
-  distance = temp*17000; 
-  console.log("distance: "+distance);
-}
+
 tank.moveForward = function () {
   console.log("forward");
   async.parallel([
@@ -102,9 +88,6 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-function callback(){
-  console.log("in callback");
-}
 tank.getDistance = function () {
   var start, stop;
   gpio.write(trig,0);
@@ -112,10 +95,9 @@ tank.getDistance = function () {
   gpio.write(trig,0);
   while (gpio_read(echo) == 0) { start = Date.now(); }
   while (gpio_read(echo) == 1) { stop = Date.now(); }  
-  var temp = stop - start;
-  var temp1 = temp/1000.0;
-
-  distance = temp1* 17000;
+  var temp = (stop - start)/1000;
+  console.log(temp);
+  distance = temp/0.000148;
   console.log("distance: "+distance);
 };
 tank.goup = function () {
