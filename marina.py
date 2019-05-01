@@ -4,21 +4,24 @@ import Tkinter as tk
 import sys
 
 def distance():
+    echo = 12
+    trig = 16
     gpio.setmode(gpio.BOARD)
-    gpio.setup(12,gpio.OUT)
-    gpio.setup(16,gpio.IN)
-    gpio.output(12,gpio.LOW)
-    while gpio.input(16) == 0:
-        print ("No signal")
-        nosig = time.time()
-    while gpio.input(16) == 1:
-        print ("Signal")
-        sig = time.time()
-    tl = sig - nosig
-    distance = tl/0.000148
+    gpio.setup(trig,gpio.OUT)
+    gpio.setup(echo,gpio.IN)
+    gpio.output(echo,gpio.LOW)
+    gpio.output(trig,1)
+    time.sleep(0.00001)
+    gpio.output(trig,0)
+    while gpio.input(echo) == 0:
+        pass
+    start = time.time() 
+    while gpio.input(echo) == 1:
+        pass   
+    stop = time.time()
+    distance = (stop-start) * 17000
     gpio.cleanup()
     return distance
-    
 def init():
     gpio.cleanup()
     gpio.setmode(gpio.BOARD)
@@ -74,6 +77,7 @@ def down(tf):
     gpio.output(11,gpio.HIGH)
     time.sleep(tf)
     gpio.cleanup()
+print("result ")    
 print(distance()) 
 #def key(event):
  #   init()
