@@ -16,8 +16,8 @@ var express = require('express'),
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = new Gpio(18,'out'),//12,
-  echo = new Gpio(23, 'in'),//16 
+  trig = 12,//new Gpio(18,'out'),//12,
+  echo = 16//new Gpio(23, 'in'),//16 
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -52,6 +52,18 @@ app.configure('production', function () {
 
 // Routes
 app.get('/', routes.index);
+
+var gpio_read = function (channel) {
+  new Promise(resolve => {
+      gpio.read(channel, function (error, result) {
+          console.log('gpio.read', error, result);
+          resolve(result);
+      });
+  });
+}
+
+
+
 
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
@@ -93,28 +105,16 @@ tank.moveForward = function () {
 function callback(){
   console.log("in callback");
 }
-// tank.getDistance = function () {
-//   gpio.write(trig,0);
-//   gpio.write(trig,1);
-//   gpio.write(trig,0);
-//   var start,stop;
-//   while(gpio.read(echo,callback()) == 0){start = Date.now();}
-//   while(gpio.read(echo,callback()) == 1){stop = Date.now();}
-//   distance = ((stop-start)/1000.0)*17000
-//   console.log("distance: "+ distance);
-//   // var MICROSECDONDS_PER_CM = 1e6/34321;
-//   // trig.digitalWrite(0); // Make sure trigger is low
-//   // var startTick;
-//   // echo.on('alert', (level, tick) => {
-//   //   if (level == 1) {
-//   //     startTick = tick;
-//   //   } else {
-//   //     var endTick = tick;
-//   //     var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-//   //     console.log(diff / 2 / MICROSECDONDS_PER_CM);
-//   //   }
-//   // });
-// };
+tank.getDistance = function () {
+  var start, stop;
+  gpio.write(trig,0);
+  gpio.write(trig,1);
+  gpio.write(trig,0);
+  while (gpio_read(echo) == 0) { start = Date.now(); }
+  while (gpio_read(echo) == 1) { stop = Date.now(); }  
+  distance = ((stop - start) / 1000.0) * 17000;
+  console.log("distance: "+distance);
+};
 tank.goup = function () {
   console.log("up");
   async.parallel(
@@ -187,9 +187,7 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        // var sensor = usonic.createSensor(echo, trig, 10);
-        // distance = sensor();
-        autonomy();
+        tank.getDistance();
         console.log("distance: " + distance);
         break;
       case 'down':
