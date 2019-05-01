@@ -87,7 +87,7 @@ tank.getDistance = function () {
   var start,stop;
   while(gpio.read(echo,callback(error,data)) == 0){start = Date.now();}
   while(gpio.read(echo,callback(error,data)) == 1){stop = Date.now();}
-  var distance = ((stop-start)/1000.0)*17000
+  distance = ((stop-start)/1000.0)*17000
   console.log("distance: "+ distance);
   // var MICROSECDONDS_PER_CM = 1e6/34321;
   // trig.digitalWrite(0); // Make sure trigger is low
@@ -176,7 +176,7 @@ io.sockets.on('connection', function (socket) {
         tank.moveForward();
         // var sensor = usonic.createSensor(echo, trig, 10);
         // distance = sensor();
-        // console.log("distance: " + distance);
+        console.log("distance: " + distance);
         break;
       case 'down':
         tank.moveBackward();
