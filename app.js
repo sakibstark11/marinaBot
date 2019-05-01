@@ -71,10 +71,10 @@ var off = function () {
   gpio.write(trig, 0);
 }
 tank.getDistance = function () {
-  var start, stop;
+  var start, stop = 0;
   gpio.write(trig, 0);
   gpio.write(trig, 1);
-  setTimeout(off, 10);
+  setTimeout(off, 100);
   while (gpio.read(echo,function(err,value){if (err) throw err;}) === 0) {
     start = Date.now();
     console.log("nosig");
@@ -83,7 +83,7 @@ tank.getDistance = function () {
     stop = Date.now();
     console.log("sig");
   }
-  console.log(stop - start);
+  console.log(stop-start);
 };
 tank.goup = function () {
   console.log("up");
