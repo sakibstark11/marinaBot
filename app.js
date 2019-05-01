@@ -10,7 +10,6 @@ var express = require('express'),
   crypto = require('crypto'),
   async = require('async'),
   usonic = require('r-pi-usonic'),
-  stopwatch = Stopwatch.create(),
   tank = {},
   p7 = 7,
   p11 = 11,
@@ -69,17 +68,14 @@ tank.moveForward = function () {
   ]);
 };
 tank.getDistance = function () {
-  async.parallel([
-    gpio.write(trig,0),
-    gpio.write(trig,1),
-    gpio.write(trig,0),
-  ]);
+  gpio.write(trig,0);
+  gpio.write(trig,1);
+  gpio.write(trig,0);
   var start,stop;
-  while(gpio.read(echo) == 0){start = Date.now();}
-  while(gpio.read(echo) == 1){stop = Date.now();}
+  while(gpio.read(echo, callbackfunction(error, data)) == 0){start = Date.now();}
+  while(gpio.read(echo, callbackfunction(error, data)) == 1){stop = Date.now();}
   var distance = ((stop-start)/1000.0)*17000
   console.log("distance: "+ distance);
-  
 };
 
 tank.goup = function () {
