@@ -83,9 +83,9 @@ tank.getDistance = function () {
   gpio.write(trig,0);
   gpio.write(trig,1);
   setTimeout(off,10);
-  while (gpio_read(echo) == 0) { start = Date.now();
+  while (gpio_read(echo) === 0) { start = Date.now();
   console.log("nosig"); }
-  while (gpio_read(echo) == 1) { stop = Date.now();
+  while (gpio_read(echo) === 1) { stop = Date.now();
   console.log("sig"); }
   console.log(stop-start);
 };
