@@ -54,9 +54,9 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT),
-    gpio.setup(trig, gpio.DIR_OUT),
-    gpio.setup(echo, gpio.DIR_IN)
+    gpio.setup(p15, gpio.DIR_OUT)
+   // gpio.setup(trig, gpio.DIR_OUT),
+    //gpio.setup(echo, gpio.DIR_IN)
   ]);
 };
 
