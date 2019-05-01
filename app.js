@@ -27,9 +27,11 @@ var express = require('express'),
 usonic.init(function (error) {
     if (error) {
       console.log("Error Mate");
+      var sensor = usonic.createSensor(echo, trig, 10);
+      distance = sensor();
     } else {
         var sensor = usonic.createSensor(echo, trig, 10);
-        distance = sensor();
+        // distance = sensor();
     }
 });
 // Configuration
