@@ -24,11 +24,9 @@ var express = require('express'),
   time2,
   totaltime = 0,
   io = sio.listen(app);
-
 // usonic.init(function (error) {
 //   if (error) {
 //     console.log("Error Mate");
-
 //   } else {
 //     // var sensor = usonic.createSensor(echo, trig, 10);
 //     // distance = sensor();
@@ -58,6 +56,7 @@ app.get('/', routes.index);
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
+  gpio.reset();
   async.parallel([
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
