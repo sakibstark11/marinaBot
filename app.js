@@ -140,6 +140,7 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
+  tank.getDistance();
   // var nosig,sig;
   // gpio.write(trig,0);
   // while(gpio.read(echo) == 0){
@@ -153,7 +154,7 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    tank.getDistance();
+    
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
@@ -226,4 +227,3 @@ io.sockets.on('connection', function (socket) {
 
 });
 tank.initPins();
-tank.getDistance();
