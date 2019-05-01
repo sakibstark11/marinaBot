@@ -70,13 +70,9 @@ tank.moveForward = function () {
 };
 var off = function () {
 }
+const watchHCSR04 = () => {
+  let startTick;
 
-tank.getDistance = function () {
-  var MICROSECDONDS_PER_CM = 1e6 / 34321;
-  var trigger = new Gpio(trig, { mode: Gpio.OUTPUT });
-  var echo = new Gpio(echo, { mode: Gpio.INPUT, alert: true });
-  trigger.digitalWrite(0); // Make sure trigger is low
-  var startTick;
   echo.on('alert', (level, tick) => {
     if (level === 1) {
       startTick = tick;
@@ -86,6 +82,13 @@ tank.getDistance = function () {
       console.log(diff / 2 / MICROSECDONDS_PER_CM);
     }
   });
+};
+tank.getDistance = function () {
+  var MICROSECDONDS_PER_CM = 1e6 / 34321;
+  var trigger = new Gpio(trig, { mode: Gpio.OUTPUT });
+  var echo = new Gpio(echo, { mode: Gpio.INPUT, alert: true });
+  trigger.digitalWrite(0); // Make sure trigger is low
+  watchHCSR04();
 };
 
 tank.goup = function () {
