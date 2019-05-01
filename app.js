@@ -174,9 +174,9 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        var sensor = usonic.createSensor(echo, trig, 10);
-        distance = sensor();
-        console.log("distance: " + distance);
+        // var sensor = usonic.createSensor(echo, trig, 10);
+        // distance = sensor();
+        // console.log("distance: " + distance);
         break;
       case 'down':
         tank.moveBackward();
@@ -220,5 +220,5 @@ io.sockets.on('connection', function (socket) {
     }
   });
 });
-usonic.init();
+// usonic.init();
 tank.initPins();
