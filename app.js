@@ -12,7 +12,6 @@ var express = require('express'),
   usonic = require('r-pi-usonic'),
   stopwatch = Stopwatch.create(),
   tank = {},
-  distance = 0,
   p7 = 7,
   p11 = 11,
   p13 = 13,
@@ -76,10 +75,11 @@ tank.getDistance = function () {
     gpio.write(trig,0),
   ]);
   var start,stop;
-  while(gpio.read(echo) == 0){start = new Date().getTime();}
-  while(gpio.read(echo) == 1){stop = new Date().getTime();}
-  distance = (stop-start)*17000
+  while(gpio.read(echo) == 0){start = Date.now();}
+  while(gpio.read(echo) == 1){stop = Date.now();}
+  var distance = (stop-start)*17000
   console.log("distance: "+ distance);
+  return distance
 };
 
 tank.goup = function () {
@@ -197,7 +197,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('keyup', function (dir) {
     switch (dir) {
       case 'goup':
-        time2 = new Date().getTime();
+        time2 = Date.now();
         var diff = time2 - time;
         console.log("diff " + diff);
         totaltime -= diff;
@@ -208,7 +208,7 @@ io.sockets.on('connection', function (socket) {
         tank.stopAllMotors();
         break;
       case 'godown':
-        time2 = new Date().getTime();
+        time2 = Date.now();
         var diff = time2 - time;
         console.log("diff " + diff);
         totaltime += diff;
