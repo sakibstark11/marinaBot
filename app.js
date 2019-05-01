@@ -17,7 +17,7 @@ var express = require('express'),
   p13 = 13,
   p15 = 15,
   trig = 12,//new Gpio(18,'out'),//12,
-  echo = 16//new Gpio(23, 'in'),//16 
+  echo = 16,//new Gpio(23, 'in'),//16 
   distance,
   app = module.exports = express.createServer(),
   time,
