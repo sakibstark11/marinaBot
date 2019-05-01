@@ -123,10 +123,10 @@ tank.turnLeft = function () {
 function autonomy() {
         var sensor = usonic.createSensor(echo, trig, 450);
         distance = sensor();
+        console.log(distance);
+        gpio.reset();
 };
-  console.log(distance);
-  gpio.reset();
-}
+
 
 tank.stopAllMotors = function () {
   console.log("stop");
