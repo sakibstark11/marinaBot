@@ -140,7 +140,7 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  tank.getDistance();
+
   // var nosig,sig;
   // gpio.write(trig,0);
   // while(gpio.read(echo) == 0){
@@ -165,23 +165,28 @@ io.sockets.on('connection', function (socket) {
       case 'up':
         tank.moveForward();
         console.log("forward");
+        tank.getDistance();
         break;
       case 'down':
         tank.moveBackward();
         console.log("reverse");
+        tank.getDistance();
         break;
       case 'left':
         tank.turnLeft();
         console.log("left");
+        tank.getDistance();
         break;
       case 'right':
         tank.turnRight();
         console.log("right");
+        tank.getDistance();
         break;
       case 'goup':
         time = new Date().getTime();
         console.log(time);
         tank.goup();
+        tank.getDistance();
         // stopwatch.start();
         console.log("up");
         break;
@@ -191,6 +196,7 @@ io.sockets.on('connection', function (socket) {
         tank.godown();
         // stopwatch.start();
         console.log("down");
+        tank.getDistance();
         break;
     }
   });
