@@ -6,6 +6,7 @@ var express = require('express'),
   routes = require('./routes'),
   sio = require('socket.io'),
   gpio = require('rpi-gpio'),
+  wpi = require('wiring-pi'),
   crypto = require('crypto'),
   async = require('async'),
   tank = {},
@@ -13,8 +14,8 @@ var express = require('express'),
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 16,
-  echo = 12,
+  trig = 4,
+  echo = 1,
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -36,6 +37,7 @@ app.configure('development', function () {
 app.configure('production', function () {
   app.use(express.errorHandler());
 });
+
 // Routes
 app.get('/', routes.index);
 // var gpio_read = function (channel) {
@@ -53,9 +55,7 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT),
-    gpio.setup(echo, gpio.DIR_IN),
-    gpio.setup(trig, gpio.DIR_OUT)
+    gpio.setup(p15, gpio.DIR_OUT)
   ]);
 };
 tank.moveForward = function () {
@@ -68,41 +68,19 @@ tank.moveForward = function () {
   ]);
 };
 var off = function () {
-  gpio.write(trig, 0);
+  wpi.digitalWrite(trig, 0);
 }
 tank.getDistance = function () {
-  var start, stop = 0;
-  gpio.write(trig, 0);
-  gpio.write(trig, 1);
+  var stop,start = 0;
+  wpi.setup('wpi');
+  wpi.pinMode(echo, wpi.INPUT);
+  wpi.pinMode(trig,wpi.OUTPUT);
+  wpi.digitalWrite(trig,1);
   setTimeout(off, 100);
-  // while (gpio.read(echo,function(err,value){if (err) throw err;}) == false) {
-  //   start = Date.now();
-  //   console.log("nosig");
-  // }
-  // while (gpio.read(echo,function(err,value){if (err) throw err;}) == true) {
-  //   stop = Date.now();
-  //   console.log("sig");
-  // }
-  gpio.read(echo, function(err, value) {
-    if (err) throw err;
-    console.log('The value is ' + value);
-    while(value == false){
-      start = Date.now();
-    }
-});
-gpio.read(echo, function(err, value) {
-  if (err) throw err;
-  console.log('The value is ' + value);
-  while(value == true){
-    stop = Date.now();
-  }
-});
-
-  console.log("Start "+ start);
-  console.log("Stop "+ stop);
-  distance = 0;
-  distance = stop - start;
-  console.log(distance);
+  while(wpi.digitalRead(echo)==0){start = Date.now();}
+  while(wpi.digitalRead(echo)==1){stop = Date.now();}
+  console.log(stop);
+  console.log(start);
 };
 tank.goup = function () {
   console.log("up");
