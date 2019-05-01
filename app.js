@@ -9,6 +9,7 @@ var express = require('express'),
   gpio = require('rpi-gpio'),
   crypto = require('crypto'),
   async = require('async'),
+  usonic = require('r-pi-usonic'),
   stopwatch = Stopwatch.create(),
   tank = {},
   distance = 0,
@@ -115,16 +116,17 @@ tank.turnLeft = function () {
     gpio.write(p15, 1)
   ]);
 };
-function distance() {
-  var nosig, sig;
-  gpio.write(trig, 0);
-  while (gpio.read(echo) == 0) {
-    nosig = new Date().getTime();
-  }
-  while (gpio.read(echo) == 1) {
-    sig = new Date().getTime();
-  }
-  distance = (sig - nosig)/0.000148;
+function autonomy() {
+  
+  usonic.init(function (error) {
+    if (error) {
+        console.log('Error')
+    } else {
+        var sensor = usonic.createSensor(echo, trig, 450);
+        distance = sensor();
+    }
+});
+  console.log(distance);
   gpio.reset();
 }
 
@@ -138,7 +140,7 @@ tank.stopAllMotors = function () {
   ]);
 };
 io.sockets.on('connection', function (socket) {
-  console.log(distance);
+  autonomy();
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
