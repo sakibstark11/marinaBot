@@ -112,7 +112,10 @@ tank.getDistance = function () {
   gpio.write(trig,0);
   while (gpio_read(echo) == 0) { start = Date.now(); }
   while (gpio_read(echo) == 1) { stop = Date.now(); }  
-  distance = ((stop - start) / 1000.0) * 17000;
+  var temp = stop - start;
+  var temp1 = temp/1000.0;
+
+  distance = temp1* 17000;
   console.log("distance: "+distance);
 };
 tank.goup = function () {
