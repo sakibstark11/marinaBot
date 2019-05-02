@@ -64,9 +64,6 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-var watchHCSR04 = function () {
-  
-};
 tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
   var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
@@ -86,6 +83,7 @@ tank.getDistance = function () {
       }
       console.log(prox);
   });
+  
 };
 
 tank.goup = function () {
@@ -121,7 +119,7 @@ tank.moveBackward = function () {
 tank.turnRight = function () {
   console.log("right");
   async.parallel([
-    gpio.write(p7, 1),
+    gpio.write(p7, 0),
     gpio.write(p13, 1),
     gpio.write(p11, 0),
     gpio.write(p15, 1)
@@ -132,7 +130,7 @@ tank.turnLeft = function () {
   async.parallel([
     gpio.write(p7, 1),
     gpio.write(p13, 0),
-    gpio.write(p11, 1),
+    gpio.write(p11, 0),
     gpio.write(p15, 1)
   ]);
 };
@@ -149,7 +147,7 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-
+    tank.getDistance();
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
@@ -159,7 +157,6 @@ io.sockets.on('connection', function (socket) {
     switch (dir) {
       case 'up':
         tank.moveForward();
-        tank.getDistance();
         break;
       case 'down':
         tank.moveBackward();
