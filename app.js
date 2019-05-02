@@ -61,6 +61,14 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
+var gpio_read = function (channel) {
+  new Promise(resolve => {
+    gpio.read(channel, function (error, result) {
+      console.log('gpio.read', error, result);
+      resolve(result);
+    });
+  });
+}
 tank.getDistance = function () {
   var stop,start;
   gpio.setup(trig, gpio.DIR_OUT);
@@ -71,11 +79,10 @@ tank.getDistance = function () {
   var off = function () {
     gpio.write(trig, 0);
 }
-  
-  while(gpio.input(echo, err) == 0){
+  while(gpio_read(echo) == false){
     console.log("nosig");
   }
-  while(gpio.input(echo, err) == 1){
+  while(gpio_read(echo) == true){
     console.log("signal");
   }
   console.log(stop-start);;
