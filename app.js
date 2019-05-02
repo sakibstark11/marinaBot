@@ -55,8 +55,8 @@ tank.initPins = function () {
     gpio.setup(p15, gpio.DIR_OUT)
   ]);
 };
-tank.moveForward = function () {
-  console.log("forward");
+tank.moveBackward = function () {
+  console.log("Reverse");
   async.parallel([
     gpio.write(p7, 0),
     gpio.write(p15, 0),
@@ -83,11 +83,10 @@ tank.getDistance = function () {
       }
       console.log(prox);
   });
-  
 };
 
-tank.goup = function () {
-  console.log("up");
+tank.goDown = function () {
+  console.log("Down");
   async.parallel(
     [
       gpio.write(p7, 0),
@@ -96,8 +95,8 @@ tank.goup = function () {
       gpio.write(p15, 1)
     ]);
 };
-tank.godown = function () {
-  console.log("down");
+tank.goUp = function () {
+  console.log("Up");
   async.parallel(
     [
       gpio.write(p13, 0),
@@ -106,8 +105,8 @@ tank.godown = function () {
       gpio.write(p11, 1)
     ]);
 };
-tank.moveBackward = function () {
-  console.log("reverse");
+tank.moveForward = function () {
+  console.log("Forward");
   async.parallel(
     [
       gpio.write(p11, 0),
@@ -116,26 +115,26 @@ tank.moveBackward = function () {
       gpio.write(p7, 1)
     ]);
 };
-tank.turnRight = function () {
-  console.log("right");
+tank.turnLeft = function () {
+  console.log("Left");
   async.parallel([
-    gpio.write(p7, 0),
+    gpio.write(p7, 1),
     gpio.write(p13, 1),
     gpio.write(p11, 0),
     gpio.write(p15, 1)
   ]);
 };
-tank.turnLeft = function () {
-  console.log("left");
+tank.turnRight = function () {
+  console.log("Right");
   async.parallel([
     gpio.write(p7, 1),
     gpio.write(p13, 0),
-    gpio.write(p11, 0),
+    gpio.write(p11, 1),
     gpio.write(p15, 1)
   ]);
 };
 tank.stopAllMotors = function () {
-  console.log("stop");
+  console.log("Stop");
   async.parallel([
     gpio.write(p11, 1),
     gpio.write(p13, 1),
