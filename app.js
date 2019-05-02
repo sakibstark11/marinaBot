@@ -72,14 +72,15 @@ tank.getDistance = function () {
     trig.write(led.ON);
     setTimeout(off, 100);
     var off = function(){trig.write(led.OFF);}
+    while(echo1.read() == led.OFF){
+      console.log("nosig");
+    }
+    while(echo1.read() == led.ON){
+      console.log("signal");
+    }
   });
 
-  while(echo1.read() == led.OFF){
-    console.log("nosig");
-  }
-  while(echo1.read() == led.ON){
-    console.log("signal");
-  }
+ 
   console.log(stop-start);;
 };
 
