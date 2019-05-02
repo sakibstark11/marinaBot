@@ -70,7 +70,7 @@ tank.moveForward = function () {
 };
 var off = function () {
 }
-const watchHCSR04 = () => {
+var watchHCSR04 = () => {
   var startTick;
 
   echo.on('alert', (level, tick) => {
