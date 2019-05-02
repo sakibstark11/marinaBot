@@ -11,12 +11,13 @@ var express = require('express'),
   async = require('async'),
   Gpio = require('pigpio').Gpio,
   tank = {},
+  pinVal = false,
   p7 = 7,
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 23,
-  echo = 18,
+  trig = 16,
+  echo = 12,
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -41,14 +42,6 @@ app.configure('production', function () {
 
 // Routes
 app.get('/', routes.index);
-// var gpio_read = function (channel) {
-//   new Promise(resolve => {
-//     gpio.read(channel, function (error, result) {
-//       console.log('gpio.read', error, result);
-//       resolve(result);
-//     });
-//   });
-// }
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
@@ -68,27 +61,35 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-var off = function () {
-}
-var watchHCSR04 = () => {
-  var startTick;
-
-  echo.on('alert', (level, tick) => {
-    if (level === 1) {
-      startTick = tick;
-    } else {
-      var endTick = tick;
-      var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log(diff / 2 / MICROSECDONDS_PER_CM);
-    }
+function readInput(err) {
+  if (err) throw err;
+  gpio.read(echo, function(err, value) {
+      if (err) throw err;
+      console.log('The value is ' + value);
+      pinVal = value;
   });
-};
+}
 tank.getDistance = function () {
-  var MICROSECDONDS_PER_CM = 1e6 / 34321;
-  var trigger = new Gpio(trig, { mode: Gpio.OUTPUT });
-  var echo = new Gpio(echo, { mode: Gpio.INPUT, alert: true });
-  trigger.digitalWrite(0); // Make sure trigger is low
-  watchHCSR04();
+  var stop,start;
+  gpio.setup(trig, gpio.DIR_OUT);
+  gpio.setup(echo, gpio.DIR_IN);
+  gpio.write(trig, 0);
+  gpio.write(trig,1);
+  setTimeout(off, 100);
+  var off = function () {
+    gpio.write(trig, 0);
+}
+  while(pinVal == false){
+    console.log("nosig");
+    start = Date.now();
+    readInput();
+  }
+  while(pinVal == true){
+    console.log("sig");
+    stop = Date.now();
+    readInput();
+  }
+  console.log(stop-start);;
 };
 
 tank.goup = function () {
