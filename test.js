@@ -7,7 +7,6 @@ var watchHCSR04 = function () {
     var MICROSECDONDS_PER_CM = 1e6 / 34321;
     var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
     var echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
-
     trigger.digitalWrite(0); // Make sure trigger is low
     var startTick;
     trigger.trigger(10, 1);
