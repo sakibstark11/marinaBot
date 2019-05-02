@@ -59,7 +59,7 @@ tank.moveForward = function () {
     gpio.write(p11, 1),
     gpio.write(p13, 1)
   ]);
-  tank.getDistance();
+  console.log(tank.getDistance);
 };
 tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
@@ -80,6 +80,7 @@ tank.getDistance = function () {
       }
       console.log(prox);
   });
+  return prox;
 };
 
 tank.goDown = function () {
@@ -91,7 +92,7 @@ tank.goDown = function () {
       gpio.write(p13, 1),
       gpio.write(p15, 1)
     ]);
-    tank.getDistance();
+    console.log(tank.getDistance);
 };
 tank.goUp = function () {
   console.log("Up");
@@ -102,7 +103,7 @@ tank.goUp = function () {
       gpio.write(p13, 0),
       gpio.write(p15, 0)
     ]);
-    tank.getDistance();
+    console.log(tank.getDistance);
 };
 tank.moveBackward = function () {
   console.log("REVERSE");
@@ -113,7 +114,7 @@ tank.moveBackward = function () {
       gpio.write(p15, 1),
       gpio.write(p7, 1)
     ]);
-    tank.getDistance();
+    console.log(tank.getDistance);
 };
 tank.turnRight = function () {
   console.log("RIGHT");
@@ -123,7 +124,7 @@ tank.turnRight = function () {
     gpio.write(p13, 1),
     gpio.write(p15, 1)
   ]);
-  tank.getDistance();
+  console.log(tank.getDistance);
 };
 tank.turnLeft = function () {
   console.log("LEFT");
@@ -133,7 +134,7 @@ tank.turnLeft = function () {
     gpio.write(p13, 0),
     gpio.write(p15, 1)
   ]);
-  tank.getDistance();
+  console.log(tank.getDistance);
 };
 tank.stopAllMotors = function () {
   console.log("Stop");
@@ -143,7 +144,7 @@ tank.stopAllMotors = function () {
     gpio.write(p15, 1),
     gpio.write(p7, 1)
   ]);
-  tank.getDistance();
+  console.log(tank.getDistance);
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
