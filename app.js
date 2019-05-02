@@ -65,23 +65,6 @@ tank.moveForward = function () {
   ]);
 };
 tank.getDistance = function () {
-  var stop,start;
-  raspi.init(() => {
-    var echo1 = new gpIO.DigitalInput('P1-12');
-    var trig1 = new gpIO.DigitalOutput('P1-16');
-    trig1.write(led.ON);
-    setTimeout(off, 100);
-    var off = function(){trig1.write(led.OFF);}
-     while(echo1.read() == led.OFF){
-    console.log("nosig");
-  }
-  while(echo1.read() == led.ON){
-    console.log("signal");
-  }
-  });
-
- 
-  console.log(stop-start);;
 };
 
 tank.goup = function () {
