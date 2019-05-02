@@ -10,7 +10,7 @@ trigger.digitalWrite(0); // Make sure trigger is low
 
 var watchHCSR04 = () => {
   var startTick;
-
+  trigger.trigger(10, 1);
   echo.on('alert', (level, tick) => {
     if (level == 1) {
       startTick = tick;
@@ -25,6 +25,6 @@ var watchHCSR04 = () => {
 watchHCSR04();
 
 // Trigger a distance measurement once per second
-setInterval(() => {
-  trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-}, 1000);
+// setInterval(() => {
+//   trigger.trigger(10, 1); // Set trigger high for 10 microseconds
+// }, 1000);
