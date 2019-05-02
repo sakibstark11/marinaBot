@@ -168,11 +168,11 @@ io.sockets.on('connection', function (socket) {
         break;
       case 'goup':
         time = new Date().getTime();
-        tank.goup();
+        tank.goUp();
         break;
       case 'godown':
         time = new Date().getTime();
-        tank.godown();
+        tank.goDown();
         break;
     }
   });
