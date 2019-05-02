@@ -8,7 +8,7 @@ var echo = new Gpio(18, {mode: Gpio.INPUT, alert: true});
 
 trigger.digitalWrite(0); // Make sure trigger is low
 
-var watchHCSR04 = () => {
+var watchHCSR04 = function() {
   var startTick;
   trigger.trigger(10, 1);
   echo.on('alert', (level, tick) => {
