@@ -76,7 +76,7 @@ tank.getDistance = function () {
 
   gpio.write(trig, 0);
   gpio.write(trig, 1);
-  setTimeout(off, 10);
+  setTimeout(off, 100);
   var off = function () {
     gpio.write(trig, 0);
 }
