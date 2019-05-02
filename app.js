@@ -124,8 +124,8 @@ tank.turnRight = function () {
   async.parallel([
     gpio.write(p7, 1),
     gpio.write(p11, 0),
-    gpio.write(p13, 1),
-    gpio.write(p15, 1)
+    gpio.write(p13, 0),
+    gpio.write(p15, 0)
   ]);
   tank.getDistance();
 };
