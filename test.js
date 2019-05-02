@@ -5,7 +5,6 @@ var Gpio = require('pigpio').Gpio;
 
 var watchHCSR04 = function () {
     var MICROSECDONDS_PER_CM = 1e6 / 34321;
-
     var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
     var echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
 
@@ -25,7 +24,7 @@ var watchHCSR04 = function () {
     echo.digitalWrite(0);
 };
 
-//watchHCSR04();
+watchHCSR04();
 
 // Trigger a distance measurement once per second
 // setInterval(() => {
