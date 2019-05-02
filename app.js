@@ -72,10 +72,10 @@ tank.getDistance = function () {
     gpio.write(trig, 0);
 }
   
-  while(gpio.input(echo) == 0){
+  while(gpio.input(echo, err) == 0){
     console.log("nosig");
   }
-  while(gpio.input(echo) == 1){
+  while(gpio.input(echo, err) == 1){
     console.log("signal");
   }
   console.log(stop-start);;
