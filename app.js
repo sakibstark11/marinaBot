@@ -128,8 +128,8 @@ tank.turnRight = function () {
 tank.turnLeft = function () {
   console.log("LEFT");
   async.parallel([
-    gpio.write(p7, 0),
-    gpio.write(p11, 1),
+    gpio.write(p7, 1),
+    gpio.write(p11, 0),
     gpio.write(p13, 0),
     gpio.write(p15, 1)
   ]);
