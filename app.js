@@ -16,8 +16,8 @@ var express = require('express'),
   p11 = 11,
   p13 = 13,
   p15 = 15,
-  trig = 12,
-  echo = 16,
+  trig = 16,
+  echo = 12,
   distance,
   app = module.exports = express.createServer(),
   time,
@@ -61,14 +61,6 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-function readInput(err) {
-  if (err) throw err;
-  gpio.read(echo, function(err, value) {
-      if (err) throw err;
-      console.log('The value is ' + value);
-      pinVal = value;
-  });
-}
 tank.getDistance = function () {
   var stop,start;
   gpio.setup(trig, gpio.DIR_OUT);
@@ -79,15 +71,12 @@ tank.getDistance = function () {
   var off = function () {
     gpio.write(trig, 0);
 }
-  while(pinVal == false){
+  
+  while(gpio.input(echo) == 0){
     console.log("nosig");
-    start = Date.now();
-    readInput();
   }
-  while(pinVal == true){
-    console.log("sig");
-    stop = Date.now();
-    readInput();
+  while(gpio.input(echo) == 1){
+    console.log("signal");
   }
   console.log(stop-start);;
 };
