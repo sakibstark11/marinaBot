@@ -49,7 +49,9 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT)
+    gpio.setup(p15, gpio.DIR_OUT),
+    gpio.setup(trig, gpio.DIR_OUT),
+    gpio.setup(echo, gpio.DIR_IN)
   ]);
 };
 tank.moveForward = function () {
@@ -71,8 +73,7 @@ var gpio_read = function (channel) {
 }
 tank.getDistance = function () {
   var stop,start;
-  gpio.setup(trig, gpio.DIR_OUT);
-  gpio.setup(echo, gpio.DIR_IN);
+
   gpio.write(trig, 0);
   gpio.write(trig, 1);
   setTimeout(off, 10);
