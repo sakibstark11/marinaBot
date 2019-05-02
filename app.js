@@ -89,6 +89,7 @@ var watchHCSR04 = function () {
   return prox;
 };
 tank.getDistance = function () {
+  console.log("get dis");
   console.log(watchHCSR04());
 };
 
