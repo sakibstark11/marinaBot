@@ -12,5 +12,10 @@
     , "pigpio" : "*"
     , "onoff" : "*"
     , "wiring-pi" : "*"
+    ,"raspi-gpio" : "*"
+    , "raspi-led" : "*"
+    , "raspi" : "*"
+    , "johnny-five" : "*"
+    , "raspi-io" : "*"
   }
 }

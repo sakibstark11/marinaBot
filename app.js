@@ -10,6 +10,11 @@ var express = require('express'),
   crypto = require('crypto'),
   async = require('async'),
   Gpio = require('pigpio').Gpio,
+  Raspi = require('raspi-io').RaspiIO,
+  five = require("johnny-five"),
+  raspi = require('raspi'),
+  gpIO = require('raspi-gpio'),
+  led = require('raspi-led'),
   tank = {},
   pinVal = false,
   p7 = 7,
@@ -49,9 +54,7 @@ tank.initPins = function () {
     gpio.setup(p7, gpio.DIR_OUT),
     gpio.setup(p11, gpio.DIR_OUT),
     gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT),
-    gpio.setup(trig, gpio.DIR_OUT),
-    gpio.setup(echo, gpio.DIR_IN)
+    gpio.setup(p15, gpio.DIR_OUT)
   ]);
 };
 tank.moveForward = function () {
@@ -63,27 +66,20 @@ tank.moveForward = function () {
     gpio.write(p13, 1)
   ]);
 };
-var gpio_read = function (channel) {
-  new Promise(resolve => {
-    gpio.read(channel, function (error, result) {
-      console.log('gpio.read', error, result);
-      resolve(result);
-    });
-  });
-}
 tank.getDistance = function () {
   var stop,start;
+  raspi.init(() => {
+    var echo1 = new gpio1.DigitalInput('P1-12');
+    var trig1 = new gpio1.DigitalOutput('P1-16');
+    trig.write(led.ON);
+    setTimeout(off, 100);
+    var off = function(){trig.write(led.OFF);}
+  });
 
-  gpio.write(trig, 0);
-  gpio.write(trig, 1);
-  setTimeout(off, 100);
-  var off = function () {
-    gpio.write(trig, 0);
-}
-  while(gpio_read(echo) == false){
+  while(echo1.read() == led.OFF){
     console.log("nosig");
   }
-  while(gpio_read(echo) == true){
+  while(echo1.read() == led.ON){
     console.log("signal");
   }
   console.log(stop-start);;
