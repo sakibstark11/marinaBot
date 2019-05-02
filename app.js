@@ -86,8 +86,6 @@ tank.getDistance = function () {
       }
       console.log(prox);
   });
-  trigger.digitalWrite(0);
-  echo.digitalWrite(0);
 };
 
 tank.goup = function () {
