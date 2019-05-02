@@ -86,11 +86,10 @@ var watchHCSR04 = function () {
   });
   trigger.digitalWrite(0);
   echo.digitalWrite(0);
-  return prox;
 };
 tank.getDistance = function () {
-  console.log("get dis");
-  console.log(watchHCSR04());
+  watchHCSR04();
+  console.log(distance);
 };
 
 tank.goup = function () {
