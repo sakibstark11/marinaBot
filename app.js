@@ -131,7 +131,7 @@ tank.turnLeft = function () {
     gpio.write(p7, 1),
     gpio.write(p11, 1),
     gpio.write(p13, 0),
-    gpio.write(p15, 0)
+    gpio.write(p15, 1)
   ]);
   tank.getDistance();
 };
