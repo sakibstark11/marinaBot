@@ -20,8 +20,8 @@ var watchHCSR04 = () => {
       console.log(diff / 2 / MICROSECDONDS_PER_CM);
     }
   });
-  trigger.off();
-  echo.off();
+  trigger.digitalWrite(0);
+  echo.digitalWrite(0);
 };
 
 watchHCSR04();
