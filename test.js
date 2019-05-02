@@ -24,7 +24,7 @@ var watchHCSR04 = function() {
   echo.digitalWrite(0);
 };
 
-watchHCSR04();
+//watchHCSR04();
 
 // Trigger a distance measurement once per second
 // setInterval(() => {
