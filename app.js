@@ -55,7 +55,7 @@ tank.initPins = function () {
     gpio.setup(p15, gpio.DIR_OUT)
   ]);
 };
-tank.moveBackward = function () {
+tank.moveForward = function () {
   console.log("Reverse");
   async.parallel([
     gpio.write(p7, 0),
@@ -105,7 +105,7 @@ tank.goUp = function () {
       gpio.write(p11, 1)
     ]);
 };
-tank.moveForward = function () {
+tank.moveBackward = function () {
   console.log("Forward");
   async.parallel(
     [
