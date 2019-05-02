@@ -67,17 +67,17 @@ tank.moveForward = function () {
 tank.getDistance = function () {
   var stop,start;
   raspi.init(() => {
-    var echo1 = new gpio1.DigitalInput('P1-12');
-    var trig1 = new gpio1.DigitalOutput('P1-16');
+    var echo1 = new gpIO.DigitalInput('P1-12');
+    var trig1 = new gpIO.DigitalOutput('P1-16');
     trig.write(led.ON);
     setTimeout(off, 100);
     var off = function(){trig.write(led.OFF);}
-    while(echo1.read() == led.OFF){
-      console.log("nosig");
-    }
-    while(echo1.read() == led.ON){
-      console.log("signal");
-    }
+     while(echo1.read() == led.OFF){
+    console.log("nosig");
+  }
+  while(echo1.read() == led.ON){
+    console.log("signal");
+  }
   });
 
  
