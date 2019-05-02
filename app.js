@@ -125,7 +125,7 @@ tank.turnRight = function () {
     gpio.write(p7, 1),
     gpio.write(p11, 0),
     gpio.write(p13, 1),
-    gpio.write(p15, 0)
+    gpio.write(p15, 1)
   ]);
   tank.getDistance();
 };
