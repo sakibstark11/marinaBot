@@ -149,7 +149,7 @@ tank.stopAllMotors = function () {
   gpio.write(p15, 1);
   gpio.write(p7, 1);  
   getDistance();
-  var now = distance;
+  var now = getDistance();
   console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
