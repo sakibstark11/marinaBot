@@ -92,7 +92,7 @@ var autonomy = function () {
   if (curDis<15){
     tank.moveBackward();  
   }
-  setTimeout(tank.stopAllMotors,2000);
+  sleep(3000);
   start = Date.now();
   while((Date.now()-start)<60000){
     console.log("waiting");
