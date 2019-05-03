@@ -75,7 +75,6 @@ tank.getDistance = function () {
       console.log(prox);
     }
   });
-  
   return prox;
 };
 function sleep(ms) {
