@@ -160,11 +160,10 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    autonomy();
+    //autonomy();
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
-
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
