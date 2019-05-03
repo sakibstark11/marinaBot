@@ -74,7 +74,6 @@ function getDistance() {
         var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
         prox = diff / 2 / MICROSECDONDS_PER_CM;
         distance = prox;
-        console.log(prox);
       }
       resolve(prox)
     });
@@ -151,7 +150,7 @@ tank.stopAllMotors = function () {
   gpio.write(p15, 1);
   gpio.write(p7, 1);  
   getDistance().then(result => {
-    console.log("distance: ",getDistance());
+    console.log("distance: ",result);
   });
 };
 io.sockets.on('connection', function (socket) {
