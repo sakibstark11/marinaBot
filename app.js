@@ -82,17 +82,16 @@ tank.getDistance = function () {
 };
 
 var autonomy = function () {
-
-  while(!io.sockets.connected){
-    while (tank.getDistance() < 10){
-      tank.moveBackward();
+  while (!io.sockets.connected) {
+    var start = Date.now();
+    while ((Date.now() - start) < 120000) {
+      while (tank.getDistance() < 10) {
+        tank.moveBackward();
+      }
+      tank.stopAllMotors();
     }
-    tank.stopAllMotors();
+    selfRescue();
   }
-  while (tank.getDistance() < 10){
-    tank.moveBackward();
-  }
-  tank.stopAllMotors();
 }
 var selfRescue = function () {
   tank.goup();
@@ -161,7 +160,7 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    tank.getDistance();
+    autonomy();
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
