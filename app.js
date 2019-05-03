@@ -139,7 +139,8 @@ tank.turnLeft = function () {
   gpio.write(p15, 1);
 };
 tank.stopAllMotors = function () {
-  console.log("distance: ",tank.getDistance());
+  var now = tank.getDistance();
+  console.log("distance: ",now);
   console.log("Stop");
   gpio.write(p11, 1);
   gpio.write(p13, 1);
