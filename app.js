@@ -44,21 +44,19 @@ app.get('/', routes.index);
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
-  async.parallel([
-    gpio.setup(p7, gpio.DIR_OUT),
-    gpio.setup(p11, gpio.DIR_OUT),
-    gpio.setup(p13, gpio.DIR_OUT),
-    gpio.setup(p15, gpio.DIR_OUT)
-  ]);
+  gpio.setup(p7, gpio.DIR_OUT);
+  gpio.setup(p11, gpio.DIR_OUT);
+  gpio.setup(p13, gpio.DIR_OUT);
+  gpio.setup(p15, gpio.DIR_OUT);
 };
 tank.moveForward = function () {
   console.log("FORWARD");
-  async.parallel([
-    gpio.write(p7, 0),
-    gpio.write(p15, 0),
-    gpio.write(p11, 1),
-    gpio.write(p13, 1)
-  ]);
+
+  gpio.write(p7, 0);
+  gpio.write(p15, 0);
+  gpio.write(p11, 1);
+  gpio.write(p13, 1);
+
 };
 tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
@@ -80,79 +78,61 @@ tank.getDistance = function () {
   });
   return prox;
 };
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
 var autonomy = function () {
   console.log(io.sockets.connected());
 }
 var selfRescue = function () {
-  if (totaltime > 0)
-  {tank.goUp();
-  setTimeout(tank.stopAllMotors, totaltime);
-  console.log("done");
-  totaltime = 0;
+  if (totaltime > 0) {
+    tank.goUp();
+    setTimeout(tank.stopAllMotors, totaltime);
+    console.log("done");
+    totaltime = 0;
   }
 }
 tank.goDown = function () {
   console.log("Down");
-  async.parallel(
-    [
-      gpio.write(p7, 0),
-      gpio.write(p11, 0),
-      gpio.write(p13, 1),
-      gpio.write(p15, 1)
-    ]);
+  gpio.write(p7, 0);
+  gpio.write(p11, 0);
+  gpio.write(p13, 1);
+  gpio.write(p15, 1);
 };
 tank.goUp = function () {
   console.log("UP");
-  async.parallel(
-    [
-      gpio.write(p7, 1),
-      gpio.write(p11, 1),
-      gpio.write(p13, 0),
-      gpio.write(p15, 0)
-    ]);
+  gpio.write(p7, 1);
+  gpio.write(p11, 1);
+  gpio.write(p13, 0);
+  gpio.write(p15, 0);
 };
 tank.moveBackward = function () {
   console.log("REVERSE");
-  async.parallel(
-    [
-      gpio.write(p11, 0),
-      gpio.write(p13, 0),
-      gpio.write(p15, 1),
-      gpio.write(p7, 1)
-    ]);
+  gpio.write(p11, 0);
+  gpio.write(p13, 0);
+  gpio.write(p15, 1);
+  gpio.write(p7, 1);
 };
 tank.turnRight = function () {
   console.log("RIGHT");
-  async.parallel([
-    gpio.write(p7, 1),
-    gpio.write(p11, 0),
-    gpio.write(p13, 1),
-    gpio.write(p15, 1)
-  ]);
+  gpio.write(p7, 1);
+  gpio.write(p11, 0);
+  gpio.write(p13, 1);
+  gpio.write(p15, 1);
 };
 tank.turnLeft = function () {
   console.log("LEFT");
-  async.parallel([
-    gpio.write(p7, 1),
-    gpio.write(p11, 1),
-    gpio.write(p13, 0),
-    gpio.write(p15, 1)
-  ]);
+  gpio.write(p7, 1);
+  gpio.write(p11, 1);
+  gpio.write(p13, 0);
+  gpio.write(p15, 1);
 };
 tank.stopAllMotors = function () {
   console.log("Stop");
-  async.parallel([
-    gpio.write(p11, 1),
-    gpio.write(p13, 1),
-    gpio.write(p15, 1),
-    gpio.write(p7, 1)
-  ]);
+  gpio.write(p11, 1);
+  gpio.write(p13, 1);
+  gpio.write(p15, 1);
+  gpio.write(p7, 1);
   console.log(tank.getDistance());
 };
 io.sockets.on('connection', function (socket) {
@@ -160,8 +140,6 @@ io.sockets.on('connection', function (socket) {
   socket.on("disconnect", function () {
     console.log("Connection lost");
     autonomy();
-        
-    
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
