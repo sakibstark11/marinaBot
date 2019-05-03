@@ -153,7 +153,6 @@ tank.stopAllMotors = function () {
   getDistance().then(result => {
     console.log("distance: ",getDistance());
   });
-  console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
