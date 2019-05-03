@@ -74,8 +74,8 @@ function getDistance() {
         var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
         prox = diff / 2 / MICROSECDONDS_PER_CM;
         distance = prox;
+        resolve(prox)
       }
-      resolve(prox)
     });
   });
 };
