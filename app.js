@@ -51,12 +51,10 @@ tank.initPins = function () {
 };
 tank.moveForward = function () {
   console.log("FORWARD");
-
   gpio.write(p7, 0);
   gpio.write(p15, 0);
   gpio.write(p11, 1);
   gpio.write(p13, 1);
-
 };
 tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
@@ -82,7 +80,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  console.log(io.sockets.connected());
+  
 }
 var selfRescue = function () {
   if (totaltime > 0) {
@@ -137,7 +135,8 @@ tank.stopAllMotors = function () {
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
-  socket.on("disconnect", function () {
+  socket.on('connect', function (){console.log(socket.connected)});
+  socket.on('disconnect', function () {
     console.log("Connection lost");
     autonomy();
   });
