@@ -83,7 +83,7 @@ tank.getDistance = function () {
 
 var autonomy = function () {
   var start = Date.now();
-  while (!io.sockets.connected) {
+  if (!io.sockets.connected) {
     if ((Date.now() - start) < 120000) {
       if (tank.getDistance() < 10) {
         tank.moveBackward();
