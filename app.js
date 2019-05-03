@@ -89,20 +89,12 @@ tank.Backward = function (time) {
       gpio.write(p15, 1),
       gpio.write(p7, 1)
     ]);
-    wait(time);
-    tank.stopAllMotors();
+    sleep(time).then(()=>{tank.stopAllMotors();});  
 };
-
-
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-async function wait(time) {
-  await sleep(time);
-}
-
 
 
 var autonomy = function () {
