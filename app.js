@@ -65,20 +65,22 @@ function getDistance() {
   var startTick;
   var prox;
   trigger.trigger(10, 1);
-  echo.on('alert', (level, tick) => {
-    if (level == 1) {
-      startTick = tick;
-    } else {
-      var endTick = tick;
-      var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      prox = diff / 2 / MICROSECDONDS_PER_CM;
-      distance = prox;
-      console.log(prox);
-      return prox;
-    }
+  return new Promise((resolve, reject) => {
+    echo.on('alert', (level, tick) => {
+      if (level == 1) {
+        startTick = tick;
+      } else {
+        var endTick = tick;
+        var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
+        prox = diff / 2 / MICROSECDONDS_PER_CM;
+        distance = prox;
+        console.log(prox);
+      }
+      resolve(prox)
+    });
   });
-  
 };
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -148,8 +150,7 @@ tank.stopAllMotors = function () {
   gpio.write(p13, 1);
   gpio.write(p15, 1);
   gpio.write(p7, 1);  
-  getDistance();
-  var now = getDistance();
+  var now = await getDistance();
   console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
