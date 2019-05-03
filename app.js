@@ -72,7 +72,7 @@ tank.getDistance = function () {
       var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
       prox = diff / 2 / MICROSECDONDS_PER_CM;
     }
-    console.log("distance " + prox);
+    console.log("distance ", prox);
   });
   return prox;
 };
@@ -80,19 +80,17 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  distance = tank.getDistance();
-  if (distance<15){
-    tank.moveBackward();
-    setTimeout(tank.stopAllMotors,1000);
+  var curDis = tank.getDistance();
+  console.log("current ", curDis);
+  if (curDis<15){
+    tank.moveBackward();  
   }
-  var isReady;
+  setTimeout(tank.stopAllMotors,1000);
   start = Date.now();
   while((Date.now()-start)<60000){
-    isReady = false;
+    console.log("waiting");
   }
-  if (isReady == false){
     selfRescue();
-  }
 }
 var selfRescue = function () {
   if (totaltime > 0) {
@@ -100,6 +98,9 @@ var selfRescue = function () {
     setTimeout(tank.stopAllMotors, totaltime);
     console.log("done");
     totaltime = 0;
+  }
+  else {
+    console.log("did not move on z axis");
   }
 }
 tank.goDown = function () {
