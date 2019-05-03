@@ -80,17 +80,6 @@ tank.getDistance = function () {
   });
   return prox;
 };
-tank.Backward = function (time) {
-  console.log("REVERSE");
-  async.parallel(
-    [
-      gpio.write(p11, 0),
-      gpio.write(p13, 0),
-      gpio.write(p15, 1),
-      gpio.write(p7, 1)
-    ]);
-    sleep(time).then(()=>{tank.stopAllMotors();});  
-};
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -98,14 +87,6 @@ function sleep(ms) {
 
 
 var autonomy = function () {
-  var start = Date.now();
-    while ((Date.now() - start) < 120000) {
-      if (tank.getDistance() < 10) {
-        tank.Backward(1000);
-      }else{
-      tank.stopAllMotors();}
-    }
-    selfRescue();
 }
 var selfRescue = function () {
   tank.goUp();
@@ -174,7 +155,7 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    autonomy();
+    selfRescue();
     // tank.goup();
     // setTimeout(tank.stopAllMotors, totaltime);
     // console.log("done");
