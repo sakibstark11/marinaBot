@@ -80,19 +80,40 @@ tank.getDistance = function () {
   });
   return prox;
 };
+tank.Backward = function (time) {
+  console.log("REVERSE");
+  async.parallel(
+    [
+      gpio.write(p11, 0),
+      gpio.write(p13, 0),
+      gpio.write(p15, 1),
+      gpio.write(p7, 1)
+    ]);
+    wait(time);
+    tank.stopAllMotors();
+};
+
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function wait(time) {
+  await sleep(time);
+}
+
+
 
 var autonomy = function () {
   var start = Date.now();
-  if (!io.sockets.connected) {
-    if ((Date.now() - start) < 120000) {
+    while ((Date.now() - start) < 120000) {
       if (tank.getDistance() < 10) {
-        tank.moveBackward();
-        setTimeout(tank.stopAllMotors,1000);
+        tank.Backward(1000);
       }else{
       tank.stopAllMotors();}
     }
     selfRescue();
-  } 
 }
 var selfRescue = function () {
   tank.goUp();
