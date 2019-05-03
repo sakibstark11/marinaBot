@@ -60,6 +60,7 @@ tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
   var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
   var echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
+  echo.digitalWrite(0); // Make sure echo is low
   trigger.digitalWrite(0); // Make sure trigger is low
   var startTick;
   var prox;
@@ -72,7 +73,6 @@ tank.getDistance = function () {
       var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
       prox = diff / 2 / MICROSECDONDS_PER_CM;
     }
-    console.log("distance ", prox);
   });
   return prox;
 };
@@ -139,12 +139,13 @@ tank.turnLeft = function () {
   gpio.write(p15, 1);
 };
 tank.stopAllMotors = function () {
+  console.log("distance: ",tank.getDistance());
   console.log("Stop");
   gpio.write(p11, 1);
   gpio.write(p13, 1);
   gpio.write(p15, 1);
   gpio.write(p7, 1);
-  console.log(tank.getDistance());
+  
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
