@@ -74,6 +74,7 @@ tank.getDistance = function () {
       prox = diff / 2 / MICROSECDONDS_PER_CM;
     }
   });
+  console.log(prox);
   return prox;
 };
 function sleep(ms) {
