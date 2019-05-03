@@ -82,19 +82,20 @@ tank.getDistance = function () {
 };
 
 var autonomy = function () {
+  var start = Date.now();
   while (!io.sockets.connected) {
-    var start = Date.now();
-    while ((Date.now() - start) < 120000) {
+    if ((Date.now() - start) < 120000) {
       if (tank.getDistance() < 10) {
         tank.moveBackward();
-      }
-      tank.stopAllMotors();
+        setTimeout(tank.stopAllMotors,1000);
+      }else{
+      tank.stopAllMotors();}
     }
     selfRescue();
   } 
 }
 var selfRescue = function () {
-  tank.goup();
+  tank.goUp();
   setTimeout(tank.stopAllMotors, totaltime);
   console.log("done");
 }
