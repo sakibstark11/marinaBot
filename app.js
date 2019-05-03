@@ -87,6 +87,7 @@ function sleep(ms) {
 
 
 var autonomy = function () {
+  console.log(io.sockets.connected());
 }
 var selfRescue = function () {
   if (totaltime > 0)
@@ -158,10 +159,9 @@ io.sockets.on('connection', function (socket) {
   totaltime = 0;
   socket.on("disconnect", function () {
     console.log("Connection lost");
-    selfRescue();
-    // tank.goup();
-    // setTimeout(tank.stopAllMotors, totaltime);
-    // console.log("done");
+    autonomy();
+        
+    
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
