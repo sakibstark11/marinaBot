@@ -74,9 +74,10 @@ function getDistance() {
       prox = diff / 2 / MICROSECDONDS_PER_CM;
       distance = prox;
       console.log(prox);
+      return prox;
     }
   });
-  return prox;
+  
 };
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -88,7 +89,7 @@ var autonomy = function () {
   if (curDis<15){
     tank.moveBackward();  
   }
-  setTimeout(tank.stopAllMotors,1000);
+  setTimeout(tank.stopAllMotors,2000);
   start = Date.now();
   while((Date.now()-start)<60000){
     console.log("waiting");
