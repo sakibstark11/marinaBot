@@ -82,8 +82,17 @@ tank.getDistance = function () {
 };
 
 var autonomy = function () {
-  
 
+  while(!io.sockets.connected){
+    while (tank.getDistance() < 10){
+      tank.moveBackward();
+    }
+    tank.stopAllMotors();
+  }
+  while (tank.getDistance() < 10){
+    tank.moveBackward();
+  }
+  tank.stopAllMotors();
 }
 var selfRescue = function () {
   tank.goup();
