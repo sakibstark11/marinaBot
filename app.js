@@ -49,6 +49,7 @@ tank.initPins = function () {
   gpio.setup(p11, gpio.DIR_OUT);
   gpio.setup(p13, gpio.DIR_OUT);
   gpio.setup(p15, gpio.DIR_OUT);
+  tank.stopAllMotors();
 };
 tank.moveForward = function () {
   console.log("FORWARD");
@@ -149,7 +150,7 @@ tank.stopAllMotors = function () {
   gpio.write(p7, 1);  
   getDistance();
   var now = distance;
-  console.log("distance: ",getDistance());
+  console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
