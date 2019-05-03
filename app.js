@@ -61,11 +61,10 @@ tank.getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
   var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
   var echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
-  echo.digitalWrite(0); // Make sure echo is low
   trigger.digitalWrite(0); // Make sure trigger is low
   var startTick;
   var prox;
-  trigger.trigger(100, 1);
+  trigger.trigger(10, 1);
   echo.on('alert', (level, tick) => {
     if (level == 1) {
       startTick = tick;
@@ -73,9 +72,10 @@ tank.getDistance = function () {
       var endTick = tick;
       var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
       prox = diff / 2 / MICROSECDONDS_PER_CM;
+      console.log(prox);
     }
   });
-  console.log(prox);
+  
   return prox;
 };
 function sleep(ms) {
