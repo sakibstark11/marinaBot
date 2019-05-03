@@ -67,7 +67,7 @@ tank.getDistance = function () {
   trigger.digitalWrite(0); // Make sure trigger is low
   var startTick;
   var prox;
-  trigger.trigger(100, 1);
+  trigger.trigger(10, 1);
   echo.on('alert', (level, tick) => {
     if (level == 1) {
       startTick = tick;
