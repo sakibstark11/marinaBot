@@ -84,8 +84,10 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  getDistance();
-  var curDis = distance;
+  var curDis;
+  getDistance().then(result => {
+    curDis = result;
+  });
   console.log("current ", curDis);
   if (curDis<15){
     tank.moveBackward();  
