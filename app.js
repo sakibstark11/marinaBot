@@ -151,7 +151,7 @@ tank.stopAllMotors = function () {
   gpio.write(p15, 1);
   gpio.write(p7, 1);  
   getDistance().then(result => {
-    console.log("distance: ",now);
+    console.log("distance: ",getDistance());
   });
   console.log("distance: ",now);
 };
