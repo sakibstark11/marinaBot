@@ -44,6 +44,7 @@ app.get('/', routes.index);
 app.listen(3000);
 //console.log('Listening %d in %s mode', app.address().port, app.settings.env);
 tank.initPins = function () {
+  gpio.reset();
   gpio.setup(p7, gpio.DIR_OUT);
   gpio.setup(p11, gpio.DIR_OUT);
   gpio.setup(p13, gpio.DIR_OUT);
