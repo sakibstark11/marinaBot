@@ -64,7 +64,7 @@ tank.getDistance = function () {
   trigger.digitalWrite(0); // Make sure trigger is low
   var startTick;
   var prox;
-  trigger.trigger(1, 1);
+  trigger.trigger(100, 1);
   echo.on('alert', (level, tick) => {
     if (level == 1) {
       startTick = tick;
@@ -139,14 +139,13 @@ tank.turnLeft = function () {
   gpio.write(p15, 1);
 };
 tank.stopAllMotors = function () {
-  var now = tank.getDistance();
-  console.log("distance: ",now);
   console.log("Stop");
   gpio.write(p11, 1);
   gpio.write(p13, 1);
   gpio.write(p15, 1);
-  gpio.write(p7, 1);
-  
+  gpio.write(p7, 1);  
+  var now = tank.getDistance();
+  console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
