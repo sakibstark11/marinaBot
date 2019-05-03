@@ -80,7 +80,19 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  
+  distance = tank.getDistance();
+  if (distance<15){
+    tank.moveBackward();
+    setTimeout(tank.stopAllMotors,1000);
+  }
+  var isReady;
+  start = Date.now();
+  while((Date.now()-start)<60000){
+    isReady = false;
+  }
+  if (isReady == false){
+    selfRescue();
+  }
 }
 var selfRescue = function () {
   if (totaltime > 0) {
@@ -135,7 +147,6 @@ tank.stopAllMotors = function () {
 };
 io.sockets.on('connection', function (socket) {
   totaltime = 0;
-  socket.on('connect', function (){console.log(socket.connected)});
   socket.on('disconnect', function () {
     console.log("Connection lost");
     autonomy();
