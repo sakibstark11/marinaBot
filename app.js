@@ -75,10 +75,9 @@ tank.getDistance = function () {
     } else {
       var endTick = tick;
       var diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log("distance ");
       prox = diff / 2 / MICROSECDONDS_PER_CM;
     }
-    console.log(prox);
+    console.log("distance " + prox);
   });
   return prox;
 };
