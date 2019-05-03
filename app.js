@@ -89,9 +89,12 @@ function sleep(ms) {
 var autonomy = function () {
 }
 var selfRescue = function () {
-  tank.goUp();
+  if (totaltime > 0)
+  {tank.goUp();
   setTimeout(tank.stopAllMotors, totaltime);
   console.log("done");
+  totaltime = 0;
+  }
 }
 tank.goDown = function () {
   console.log("Down");
