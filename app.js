@@ -49,7 +49,6 @@ tank.initPins = function () {
   gpio.setup(p11, gpio.DIR_OUT);
   gpio.setup(p13, gpio.DIR_OUT);
   gpio.setup(p15, gpio.DIR_OUT);
-  tank.stopAllMotors();
 };
 tank.moveForward = function () {
   console.log("FORWARD");
