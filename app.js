@@ -57,7 +57,7 @@ tank.moveForward = function () {
   gpio.write(p11, 1);
   gpio.write(p13, 1);
 };
-tank.getDistance = function () {
+var getDistance = function () {
   var MICROSECDONDS_PER_CM = 1e6 / 34321;
   var trigger = new Gpio(23, { mode: Gpio.OUTPUT });
   var echo = new Gpio(18, { mode: Gpio.INPUT, alert: true });
@@ -81,7 +81,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  var curDis = tank.getDistance();
+  var curDis = getDistance();
   console.log("current ", curDis);
   if (curDis<15){
     tank.moveBackward();  
@@ -145,7 +145,7 @@ tank.stopAllMotors = function () {
   gpio.write(p13, 1);
   gpio.write(p15, 1);
   gpio.write(p7, 1);  
-  var now = tank.getDistance();
+  var now = getDistance();
   console.log("distance: ",now);
 };
 io.sockets.on('connection', function (socket) {
