@@ -85,13 +85,13 @@ var autonomy = function () {
   while (!io.sockets.connected) {
     var start = Date.now();
     while ((Date.now() - start) < 120000) {
-      while (tank.getDistance() < 10) {
+      if (tank.getDistance() < 10) {
         tank.moveBackward();
       }
       tank.stopAllMotors();
     }
     selfRescue();
-  }
+  } 
 }
 var selfRescue = function () {
   tank.goup();
