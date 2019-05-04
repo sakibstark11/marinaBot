@@ -85,19 +85,16 @@ function sleep(ms) {
 }
 var autonomy = function () {
   var curDis;
-  getDistance().then(result => {
-    curDis = result;
-  });
-  console.log("current ", curDis);
-  if (curDis<15){
-    tank.moveBackward();  
+  while (True) {
+    getDistance().then(result => {
+      curDis = result;
+    });
+    console.log("current ", curDis);
+    if (curDis < 15) {
+      tank.moveBackward();
+    }
+    setTimeout(tank.stopAllMotors, 1000)
   }
-  sleep(3000);
-  start = Date.now();
-  while((Date.now()-start)<60000){
-    console.log("waiting");
-  }
-    selfRescue();
 }
 var selfRescue = function () {
   if (totaltime > 0) {
@@ -150,12 +147,13 @@ tank.stopAllMotors = function () {
   gpio.write(p11, 1);
   gpio.write(p13, 1);
   gpio.write(p15, 1);
-  gpio.write(p7, 1);  
+  gpio.write(p7, 1);
   getDistance().then(result => {
-    console.log("distance: ",result);
+    console.log("distance: ", result);
   });
 };
 io.sockets.on('connection', function (socket) {
+  console.log("user connected");
   totaltime = 0;
   socket.on('disconnect', function () {
     console.log("Connection lost");
