@@ -160,8 +160,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log("Connection lost");
     connection = false;
-    autonomy();
-    //selfRescue();
+    //autonomy();
+    selfRescue();
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
