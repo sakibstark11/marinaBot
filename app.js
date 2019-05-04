@@ -11,6 +11,7 @@ var express = require('express'),
   Gpio = require('pigpio').Gpio,
   tank = {},
   pinVal = false,
+  connection,
   p7 = 7,
   p11 = 11,
   p13 = 13,
@@ -84,16 +85,17 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  var curDis;
-  while (true) {
+  
+  while (!connection) {
+    var curDis;
     getDistance().then(result => {
       curDis = result;
+      console.log("current ", curDis);
+      if (curDis < 15) {
+        tank.moveBackward();
+        setTimeout(tank.stopAllMotors, 1000);
+      }
     });
-    console.log("current ", curDis);
-    if (curDis < 15) {
-      tank.moveBackward();
-    }
-    setTimeout(tank.stopAllMotors, 1000)
   }
 }
 var selfRescue = function () {
@@ -154,9 +156,11 @@ tank.stopAllMotors = function () {
 };
 io.sockets.on('connection', function (socket) {
   console.log("user connected");
+  connection = true;
   totaltime = 0;
   socket.on('disconnect', function () {
     console.log("Connection lost");
+    connection = false;
     autonomy();
   });
   socket.on('keydown', function (dir) {
