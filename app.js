@@ -91,9 +91,9 @@ var autonomy = function () {
       curDis = result;
       console.log("current ", curDis);
       if (curDis < 15) {
-        tank.moveBackward();
-        setTimeout(tank.stopAllMotors, 1000);
+        tank.moveBackward();  
       }
+      setTimeout(tank.stopAllMotors, 1000);
     });
   }
 }
@@ -160,7 +160,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log("Connection lost");
     connection = false;
-    selfRescue();
+    autonomy();
+    //selfRescue();
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
