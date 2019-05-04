@@ -85,7 +85,7 @@ function sleep(ms) {
 }
 var autonomy = function () {
   var curDis;
-  while (True) {
+  while (true) {
     getDistance().then(result => {
       curDis = result;
     });
