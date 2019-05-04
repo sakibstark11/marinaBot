@@ -85,7 +85,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 var autonomy = function () {
-  
   while (!connection) {
     var curDis;
     getDistance().then(result => {
@@ -161,7 +160,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log("Connection lost");
     connection = false;
-    autonomy();
+    selfRescue();
   });
   socket.on('keydown', function (dir) {
     switch (dir) {
